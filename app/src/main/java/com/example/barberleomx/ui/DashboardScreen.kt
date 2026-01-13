@@ -1,5 +1,8 @@
 package com.example.barberleomx.ui
 
+
+import com.example.barberleomx.ui.navigation.Routes
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -30,19 +33,19 @@ fun DashboardScreen(navController: NavHostController) {
                 icon = Icons.Default.Event,
                 text = "Reservar cita",
                 backgroundColor = Color(0xFF1E88E5)
-            ) { }
+            ) {navController.navigate(Routes.Booking.route) }
 
             CircleMenuButton(
                 icon = Icons.Default.Build,
                 text = "Servicios",
                 backgroundColor = Color.DarkGray
-            ) { }
+            ) {navController.navigate(Routes.Services.route) }
 
             CircleMenuButton(
                 icon = Icons.Default.Person,
                 text = "Barberos",
                 backgroundColor = Color(0xFFB87333)
-            ) { }
+            ) {navController.navigate(Routes.Barbers.route) }
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -55,19 +58,19 @@ fun DashboardScreen(navController: NavHostController) {
                 icon = Icons.Default.LocationOn,
                 text = "Ubicación",
                 backgroundColor = Color(0xFF2E7D32)
-            ) { }
+            ) { navController.navigate(Routes.Location.route)}
 
             CircleMenuButton(
                 icon = Icons.Default.Star,
                 text = "Reseñas",
                 backgroundColor = Color(0xFF8D3C2F)
-            ) { }
+            ) {navController.navigate(Routes.Reviews.route)}
 
             CircleMenuButton(
                 icon = Icons.Default.Settings,
                 text = "Ajustes",
                 backgroundColor = Color.Black
-            ) { }
+            ) {navController.navigate(Routes.Settings.route)}
         }
     }
 }
