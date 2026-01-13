@@ -12,7 +12,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.barberleomx.ui.components.CircleMenuButton
 
-
 @Composable
 fun DashboardScreen(navController: NavHostController) {
 
@@ -23,17 +22,15 @@ fun DashboardScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
 
-        // 🔹 Fila 1
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             CircleMenuButton(
-                icon = Icons.Default.Schedule,
+                icon = Icons.Default.Event,
                 text = "Reservar cita",
                 backgroundColor = Color(0xFF1E88E5)
             ) { }
-
 
             CircleMenuButton(
                 icon = Icons.Default.Build,
@@ -50,7 +47,6 @@ fun DashboardScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // 🔹 Fila 2
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -75,9 +71,10 @@ fun DashboardScreen(navController: NavHostController) {
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
-fun DashboardPreview() {
-    DashboardScreen(navController = rememberNavController())
+fun DashboardScreenPreview() {
+    DashboardScreen(
+        navController = rememberNavController()
+    )
 }
