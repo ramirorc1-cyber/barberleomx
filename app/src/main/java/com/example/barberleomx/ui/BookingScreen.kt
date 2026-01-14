@@ -17,6 +17,7 @@ fun BookingScreen() {
         Text(text = "Pantalla de Reservar Cita")
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun BookingScreenPreview() {
