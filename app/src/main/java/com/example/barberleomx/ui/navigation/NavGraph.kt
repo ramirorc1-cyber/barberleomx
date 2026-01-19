@@ -20,3 +20,8 @@ fun AppNavGraph() {
         composable("ajustes") { AjustesScreen() }
     }
 }
+
+@Composable
+fun ClientesScreen() {
+    TODO("Not yet implemented")
+}
