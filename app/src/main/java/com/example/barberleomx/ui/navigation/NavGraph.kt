@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import com.example.barberleomx.ui.screens.SplashScreen
 import com.example.barberleomx.ui.screens.LoginScreen
 import com.example.barberleomx.ui.screens.HomeScreen
+import com.example.barberleomx.ui.screens.home.HomeScreen
 
 
 @Composable
