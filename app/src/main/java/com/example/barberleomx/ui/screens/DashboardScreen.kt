@@ -1,4 +1,4 @@
-package com.example.barberleomx.ui
+package com.example.barberleomx.ui.screens
 
 
 import com.example.barberleomx.ui.navigation.Routes
