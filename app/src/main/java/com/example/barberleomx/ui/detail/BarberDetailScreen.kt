@@ -13,12 +13,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.barberleomx.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BarberDetailScreen(navController: NavController, barberId: Int) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = { Text("Detalle del barbero") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
