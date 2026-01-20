@@ -31,9 +31,10 @@ fun HomeScreen(navController: NavController) {
                 .padding(16.dp)
         ) {
             Text(
-                "Barberías cercanas",
+                "Barberías cerca de ti",
                 style = MaterialTheme.typography.headlineSmall
             )
+
 
             Spacer(modifier = Modifier.height(16.dp))
 

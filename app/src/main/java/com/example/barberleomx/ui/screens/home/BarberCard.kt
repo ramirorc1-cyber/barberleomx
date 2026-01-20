@@ -1,10 +1,15 @@
 package com.example.barberleomx.ui.screens.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.painterResource
+import com.example.barberleomx.R
 
 @Composable
 fun BarberCard(barber: Barber, onClick: () -> Unit) {
@@ -15,21 +20,33 @@ fun BarberCard(barber: Barber, onClick: () -> Unit) {
             .padding(vertical = 8.dp),
         onClick = onClick
     ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
+        Row(
+            modifier = Modifier.padding(12.dp)
         ) {
-            Text(
-                text = barber.name,
-                style = MaterialTheme.typography.titleMedium
+
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                contentDescription = "Barbero",
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(RoundedCornerShape(12.dp))
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.width(12.dp))
 
-            Text(
-                text = barber.description,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            Column {
+                Text(
+                    text = barber.name,
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = barber.description,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
         }
     }
 }
