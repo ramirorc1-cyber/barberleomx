@@ -1,4 +1,4 @@
-package com.example.barberleomx.ui
+package com.example.barberleomx.ui.screens
 
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.Image

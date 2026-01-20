@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.barberleomx.ui.*
+import com.example.barberleomx.ui.screens.DashboardScreen
 
 @Composable
 fun AppNavigation() {
@@ -13,6 +13,8 @@ fun AppNavigation() {
     NavHost(
         navController = navController,
         startDestination = Routes.Dashboard.route
+
+
     ) {
 
         composable(Routes.Dashboard.route) {

@@ -1,9 +1,10 @@
-package com.example.barberleomx.data.local
+package com.example.barberleomx.data.local.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.barberleomx.data.local.dao.BookingDao
 import com.example.barberleomx.data.local.entity.Booking
 
 @Database(
@@ -11,19 +12,19 @@ import com.example.barberleomx.data.local.entity.Booking
     version = 1,
     exportSchema = false
 )
-abstract class BarberDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun bookingDao(): BookingDao
 
     companion object {
         @Volatile
-        private var INSTANCE: BarberDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context): BarberDatabase {
+        fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    BarberDatabase::class.java,
+                    AppDatabase::class.java,
                     "barber_database"
                 ).build()
                 INSTANCE = instance
