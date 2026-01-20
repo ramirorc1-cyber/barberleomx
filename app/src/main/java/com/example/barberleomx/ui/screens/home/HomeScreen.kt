@@ -43,9 +43,10 @@ fun HomeScreen(navController: NavController) {
                     BarberCard(
                         barber = barber,
                         onClick = {
-                            // después navegamos a detalle
+                            navController.navigate("detail/${barber.id}")
                         }
                     )
+
                 }
             }
         }
