@@ -5,6 +5,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.barberleomx.ui.*
+import com.example.barberleomx.ui.screens.AjustesScreen
+import com.example.barberleomx.ui.screens.BarberHomeScreen
+import com.example.barberleomx.ui.screens.CitasScreen
 
 @Composable
 fun AppNavGraph() {

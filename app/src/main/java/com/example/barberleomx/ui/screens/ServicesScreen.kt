@@ -1,4 +1,4 @@
-package com.example.barberleomx.ui
+package com.example.barberleomx.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun ReviewsScreen() {
+fun ServicesScreen() {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Pantalla de Reseñas")
+        Text("Pantalla de Servicios")
     }
 }
 @Preview(showBackground = true)
 @Composable
-fun ReviewsScreenPreview() {
-    ReviewsScreen()
+fun ServicesScreenpreview() {
+    ServicesScreen()
 }
