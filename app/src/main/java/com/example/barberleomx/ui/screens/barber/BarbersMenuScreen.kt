@@ -1,4 +1,4 @@
-package com.example.barberleomx.ui.screens.barbers
+package com.example.barberleomx.ui.screens.barber
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
