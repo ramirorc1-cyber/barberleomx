@@ -13,18 +13,24 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.barberleomx.R
+import androidx.compose.ui.platform.LocalContext
+import com.example.barberleomx.ui.session.SessionManager
 
 @Composable
 fun LoginScreen(navController: NavController) {
+
+    val context = LocalContext.current
+    val sessionManager = SessionManager(context)
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
+        // 🔹 Imagen de fondo (pantalla completa)
         Image(
-            painter = painterResource(R.drawable.barber),
-            contentDescription = "Fondo",
+            painter = painterResource(id = R.drawable.barber),
+            contentDescription = "Fondo Login",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
@@ -45,12 +51,13 @@ fun LoginScreen(navController: NavController) {
                     focusedBorderColor = Color.Red,
                     unfocusedBorderColor = Color.Red,
                     focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color.Red
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             OutlinedTextField(
                 value = password,
@@ -61,16 +68,22 @@ fun LoginScreen(navController: NavController) {
                     focusedBorderColor = Color.Red,
                     unfocusedBorderColor = Color.Red,
                     focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    unfocusedTextColor = Color.White,
+                    cursorColor = Color.Red
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Button(
                 onClick = {
                     if (email.isNotBlank() && password.isNotBlank()) {
+
+                        // ✅ Guardar sesión
+                        sessionManager.saveLogin()
+
+                        // ✅ Ir a lista de barberías
                         navController.navigate("barber_list") {
                             popUpTo("login") { inclusive = true }
                         }
