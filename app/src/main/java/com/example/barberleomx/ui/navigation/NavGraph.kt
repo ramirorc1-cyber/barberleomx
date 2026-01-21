@@ -6,44 +6,38 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.barberleomx.ui.screens.booking.BookingScreen
-import com.example.barberleomx.ui.screens.detail.BarberDetailScreen
-import com.example.barberleomx.ui.screens.home.HomeScreen
+import com.example.barberleomx.ui.screens.barberdetail.BarberDetailScreen
+import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
+import com.example.barberleomx.ui.screens.login.LoginScreen
+import com.example.barberleomx.ui.screens.splash.SplashScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
 
     NavHost(
         navController = navController,
-        startDestination = "home"
+        startDestination = "splash"
     ) {
 
-        composable("home") {
-            HomeScreen(navController)
+        composable("splash") {
+            SplashScreen(navController)
         }
 
-        composable("services") {
-            ServicesScreen()
+        composable("login") {
+            LoginScreen(navController)
         }
 
-        composable(
-            route = "detail/{barberId}",
-            arguments = listOf(
-                navArgument("barberId") { type = NavType.IntType }
-            )
-        ) { backStackEntry ->
-            val barberId = backStackEntry.arguments?.getInt("barberId") ?: 0
-            BarberDetailScreen(navController, barberId)
+        composable("barber_list") {
+            BarberListScreen(navController)
         }
 
         composable(
-            route = "booking/{barberId}",
-            arguments = listOf(
-                navArgument("barberId") { type = NavType.IntType }
+            "barber_detail/{name}",
+            arguments = listOf(navArgument("name") { type = NavType.StringType })
+        ) {
+            BarberDetailScreen(
+                navController,
+                it.arguments?.getString("name") ?: ""
             )
-        ) { backStackEntry ->
-            val barberId = backStackEntry.arguments?.getInt("barberId") ?: 0
-            BookingScreen(navController, barberId)
         }
-    }
-}
+    }}

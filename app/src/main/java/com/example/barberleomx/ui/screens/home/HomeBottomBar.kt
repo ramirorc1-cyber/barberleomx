@@ -1,9 +1,6 @@
 package com.example.barberleomx.ui.screens.home
 
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
@@ -18,11 +15,11 @@ fun HomeBottomBar(navController: NavController) {
             onClick = { navController.navigate("home") },
             icon = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_home),
-                    contentDescription = "Inicio"
+                    painter = painterResource(R.drawable.ic_home),
+                    contentDescription = "Home"
                 )
             },
-            label = { Text("Inicio") }
+            label = { Text("Home") }
         )
 
         NavigationBarItem(
@@ -30,23 +27,23 @@ fun HomeBottomBar(navController: NavController) {
             onClick = { navController.navigate("services") },
             icon = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_services),
-                    contentDescription = "Servicios"
+                    painter = painterResource(R.drawable.ic_services),
+                    contentDescription = "Services"
                 )
             },
-            label = { Text("Servicios") }
+            label = { Text("Services") }
         )
 
         NavigationBarItem(
             selected = false,
-            onClick = { /* Perfil luego */ },
+            onClick = { navController.navigate("login") },
             icon = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_profile),
-                    contentDescription = "Perfil"
+                    painter = painterResource(R.drawable.ic_profile),
+                    contentDescription = "Profile"
                 )
             },
-            label = { Text("Perfil") }
+            label = { Text("Profile") }
         )
     }
 }

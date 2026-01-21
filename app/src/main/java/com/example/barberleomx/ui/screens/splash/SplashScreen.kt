@@ -1,13 +1,29 @@
 package com.example.barberleomx.ui.screens.splash
 
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavController
+import com.example.barberleomx.R
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
-    Text(text = "Splash Screen")
+fun SplashScreen(navController: NavController) {
 
-    // Luego puedes hacer:
-    // LaunchedEffect(Unit) { navController.navigate("login") }
+    LaunchedEffect(Unit) {
+        delay(9000)
+        navController.navigate("login") {
+            popUpTo("splash") { inclusive = true }
+        }
+    }
+
+    Image(
+        painter = painterResource(R.drawable.inicio_app),
+        contentDescription = "Splash",
+        modifier = Modifier.fillMaxSize(),
+        contentScale = ContentScale.Crop
+    )
 }
