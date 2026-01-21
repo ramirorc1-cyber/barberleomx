@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.barberleomx.ui.screens.barberdetail.BarberDetailScreen
+import com.example.barberleomx.ui.screens.barber.BarberDetailScreen
 import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
 import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.splash.SplashScreen
