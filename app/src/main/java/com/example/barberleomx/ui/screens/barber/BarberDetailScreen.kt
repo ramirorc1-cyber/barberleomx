@@ -5,15 +5,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.barberleomx.R
-import com.example.barberleomx.ui.session.SessionManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,8 +22,12 @@ fun BarberDetailScreen(
     barberName: String
 ) {
 
-    val context = LocalContext.current
-    val sessionManager = remember { SessionManager(context) }
+    if (barberName != "BarberLeoMX") {
+        BarberDisabledScreen(navController)
+        return
+    }
+
+    var showDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -37,81 +41,46 @@ fun BarberDetailScreen(
             modifier = Modifier
                 .padding(padding)
                 .padding(16.dp)
-                .fillMaxSize()
         ) {
 
-            // 🔹 Imagen de barbería
             Image(
-                painter = painterResource(
-                    when (barberName) {
-                        "BarberLeoMX" -> R.drawable.leo
-                        "Doberman" -> R.drawable.doberman
-                        else -> R.drawable.blassed
-                    }
-                ),
+                painter = painterResource(R.drawable.leo),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Crop
+                    .height(180.dp)
             )
 
             Spacer(Modifier.height(16.dp))
 
-            // 🔹 Acerca de
-            Text(
-                text = "Acerca de la barbería",
-                style = MaterialTheme.typography.titleLarge
-            )
-            Text(
-                text = "Especialistas en estilo, precisión y atención personalizada."
-            )
+            Text("Acerca de la barbería", style = MaterialTheme.typography.titleLarge)
+            Text("Especialistas en estilo, precisión y atención personalizada.")
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(16.dp))
 
-            // 🔹 Cortes
-            Text(
-                text = "Cortes disponibles",
-                style = MaterialTheme.typography.titleLarge
-            )
+            Text("Barbero", style = MaterialTheme.typography.titleLarge)
+            Text("👤 Leo Ramírez")
+            Text("📞 55 1234 5678")
+            Text("📷 Instagram: @barberleomx")
 
-            HaircutItem("Corte clásico", "$150")
-            HaircutItem("Fade", "$180")
-            HaircutItem("Barba", "$100")
+            Spacer(Modifier.height(16.dp))
 
-            Spacer(Modifier.height(24.dp))
+            Text("Cortes", style = MaterialTheme.typography.titleLarge)
 
-            // 🔹 Formas de pago
-            Text(
-                text = "Formas de pago",
-                style = MaterialTheme.typography.titleLarge
-            )
+            HaircutItem("Corte clásico", "$150") { showDialog = true }
+            HaircutItem("Fade", "$180") { showDialog = true }
+            HaircutItem("Barba", "$100") { showDialog = true }
+
+            Spacer(Modifier.height(16.dp))
+
+            Text("Formas de pago", style = MaterialTheme.typography.titleLarge)
             Text("💳 Tarjeta")
-            Text("💵 Efectivo")
+            Text("💵 Efectivo en barbería")
             Text("📲 Transferencia")
 
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(24.dp))
 
-            // 🔹 Botón cerrar sesión
             Button(
-                onClick = {
-                    sessionManager.logout()
-                    navController.navigate("login") {
-                        popUpTo(0)
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.secondary
-                )
-            ) {
-                Text("Cerrar sesión")
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            // 🔹 Volver
-            OutlinedButton(
                 onClick = { navController.popBackStack() },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -119,12 +88,27 @@ fun BarberDetailScreen(
             }
         }
     }
+
+    if (showDialog) {
+        HaircutDialog { showDialog = false }
+    }
+}
+
+@Composable
+fun HaircutDialog(content: @Composable () -> Unit) {
+    TODO("Not yet implemented")
+}
+
+@Composable
+fun BarberDisabledScreen(x0: NavController) {
+    TODO("Not yet implemented")
 }
 
 @Composable
 fun HaircutItem(
     name: String,
-    price: String
+    price: String,
+    function: () -> Unit
 ) {
     Card(
         modifier = Modifier

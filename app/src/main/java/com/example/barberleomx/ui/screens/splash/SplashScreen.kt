@@ -1,13 +1,12 @@
 package com.example.barberleomx.ui.screens.splash
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.barberleomx.R
 import com.example.barberleomx.ui.session.SessionManager
@@ -19,10 +18,11 @@ fun SplashScreen(navController: NavController) {
     val context = LocalContext.current
     val sessionManager = remember { SessionManager(context) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(true) {
         delay(2000)
 
         if (sessionManager.isLoggedIn()) {
+
             navController.navigate("barber_list") {
                 popUpTo("splash") { inclusive = true }
             }
@@ -33,13 +33,10 @@ fun SplashScreen(navController: NavController) {
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        Image(
-            painter = painterResource(id = R.drawable.inicio_app),
-            contentDescription = "Pantalla de inicio",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-    }
+    Image(
+        painter = painterResource(R.drawable.inicio_app),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.fillMaxSize()
+    )
 }
