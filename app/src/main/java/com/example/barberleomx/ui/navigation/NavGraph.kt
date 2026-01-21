@@ -12,14 +12,19 @@ import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.splash.SplashScreen
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(
+    navController: NavHostController,
+    startDestination: String
+) {
+
 
     NavHost(
         navController = navController,
-        startDestination = "splash"
+        startDestination = startDestination
     ) {
 
-        composable("splash") {
+
+    composable("splash") {
             SplashScreen(navController)
         }
 
