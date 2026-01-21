@@ -7,12 +7,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.barberleomx.R
+import com.example.barberleomx.ui.session.SessionManager
 
 data class BarberItem(
     val name: String,
@@ -45,14 +48,21 @@ fun BarberListScreen(navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(barberias) { barber ->
+                val context = LocalContext.current
+                val sessionManager = remember { SessionManager(context) }
+
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            navController.navigate("barber_detail/${barber.name}")
+                            sessionManager.saveSelectedBarber("BarberLeoMX")
+                            navController.navigate("barber_detail/BarberLeoMX")
                         }
                 ) {
-                    Row(
+                    // contenido
+                }
+
+                Row(
                         modifier = Modifier.padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -73,4 +83,3 @@ fun BarberListScreen(navController: NavController) {
             }
         }
     }
-}

@@ -83,7 +83,6 @@ fun LoginScreen(navController: NavController) {
                 onClick = {
                     if (email.isNotBlank() && password.isNotBlank()) {
                         sessionManager.saveLogin(email)
-
                         navController.navigate("barber_list") {
                             popUpTo("login") { inclusive = true }
                         }
@@ -93,6 +92,7 @@ fun LoginScreen(navController: NavController) {
             ) {
                 Text("Iniciar sesión")
             }
+
 
         }
     }
