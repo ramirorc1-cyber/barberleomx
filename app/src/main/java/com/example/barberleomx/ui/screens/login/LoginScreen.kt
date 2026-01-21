@@ -76,14 +76,14 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            val context = LocalContext.current
+            val sessionManager = remember { SessionManager(context) }
+
             Button(
                 onClick = {
                     if (email.isNotBlank() && password.isNotBlank()) {
+                        sessionManager.saveLogin(email)
 
-                        // ✅ Guardar sesión
-                        sessionManager.saveLogin()
-
-                        // ✅ Ir a lista de barberías
                         navController.navigate("barber_list") {
                             popUpTo("login") { inclusive = true }
                         }
@@ -93,6 +93,7 @@ fun LoginScreen(navController: NavController) {
             ) {
                 Text("Iniciar sesión")
             }
+
         }
     }
 }
