@@ -20,12 +20,10 @@ fun BarberCard(barber: Barber, onClick: () -> Unit) {
             .padding(vertical = 8.dp),
         onClick = onClick
     ) {
-        Row(
-            modifier = Modifier.padding(12.dp)
-        ) {
+        Row(modifier = Modifier.padding(12.dp)) {
 
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                painter = painterResource(id = R.drawable.barber),
                 contentDescription = "Barbero",
                 modifier = Modifier
                     .size(64.dp)

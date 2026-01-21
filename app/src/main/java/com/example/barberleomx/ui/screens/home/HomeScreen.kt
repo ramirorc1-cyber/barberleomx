@@ -19,9 +19,7 @@ fun HomeScreen(navController: NavController) {
     )
 
     Scaffold(
-        bottomBar = {
-            HomeBottomBar(navController)
-        }
+        bottomBar = { HomeBottomBar(navController) }
     ) { paddingValues ->
 
         Column(
@@ -35,7 +33,6 @@ fun HomeScreen(navController: NavController) {
                 style = MaterialTheme.typography.headlineSmall
             )
 
-
             Spacer(modifier = Modifier.height(16.dp))
 
             LazyColumn {
@@ -46,7 +43,6 @@ fun HomeScreen(navController: NavController) {
                             navController.navigate("detail/${barber.id}")
                         }
                     )
-
                 }
             }
         }

@@ -1,16 +1,20 @@
-package com.example.barberleomx.ui.booking
+package com.example.barberleomx.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.barberleomx.data.local.entity.Booking
-import com.example.barberleomx.data.repository.BookingRepository
+import com.example.barberleomx.ui.data.database.BarberDatabase
+import com.example.barberleomx.ui.data.model.Booking
+import com.example.barberleomx.ui.data.repository.BookingRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class BookingViewModel(
-    private val repository: BookingRepository
-) : ViewModel() {
+class BookingViewModel(application: Application) : AndroidViewModel(application) {
 
-    val bookings = repository.getAllBookings()
+    private val bookingDao = BarberDatabase.getDatabase(application).bookingDao()
+    private val repository = BookingRepository(bookingDao)
+
+    val allBookings: Flow<List<Booking>> = repository.allBookings
 
     fun addBooking(booking: Booking) {
         viewModelScope.launch {

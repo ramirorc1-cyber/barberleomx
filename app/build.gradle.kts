@@ -44,37 +44,20 @@ android {
 
 dependencies {
 
-    // Core
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
-    implementation("androidx.activity:activity-compose:1.9.2")
-
-    // Compose BOM
-    implementation(platform("androidx.compose:compose-bom:2024.09.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-
-    // Navigation Compose ✅
-    implementation("androidx.navigation:navigation-compose:2.8.5")
-
-    // ViewModel Compose ✅
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
-
-    // Room (CORRECTO)
+    // ====== ROOM (OBLIGATORIO) ======
     implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
     kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
 
-    // Maps & GPS (Sprint futuro)
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.google.android.gms:play-services-location:21.3.0")
+    // ====== COROUTINES (OBLIGATORIO PARA ROOM + FLOW) ======
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
-    // Tests
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    
 }
 
 kapt {

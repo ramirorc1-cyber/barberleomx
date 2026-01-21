@@ -1,12 +1,13 @@
 package com.example.barberleomx.ui.screens.home
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Place   // 👈 ESTE ES EL CORRECTO (para "Mapa")
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import com.example.barberleomx.R
 
 @Composable
 fun HomeBottomBar(navController: NavController) {
@@ -15,21 +16,36 @@ fun HomeBottomBar(navController: NavController) {
         NavigationBarItem(
             selected = true,
             onClick = { navController.navigate("home") },
-            icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_home),
+                    contentDescription = "Inicio"
+                )
+            },
             label = { Text("Inicio") }
         )
 
         NavigationBarItem(
             selected = false,
-            onClick = { /* luego mapa */ },
-            icon = { Icon(Icons.Default.Place, contentDescription = "Mapa") }, // 👈 CAMBIO AQUÍ
-            label = { Text("Mapa") }
+            onClick = { navController.navigate("services") },
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_services),
+                    contentDescription = "Servicios"
+                )
+            },
+            label = { Text("Servicios") }
         )
 
         NavigationBarItem(
             selected = false,
-            onClick = { /* luego perfil */ },
-            icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
+            onClick = { /* Perfil luego */ },
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_profile),
+                    contentDescription = "Perfil"
+                )
+            },
             label = { Text("Perfil") }
         )
     }
