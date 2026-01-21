@@ -1,74 +1,68 @@
 package com.example.barberleomx.ui.screens.barber
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.barberleomx.ui.components.HaircutBottomSheet
-import com.example.barberleomx.ui.model.Haircut
+import com.example.barberleomx.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BarberDetailScreen(
-    navController: NavController,
-    barberName: String
-) {
-
-    var showHaircutSheet by remember { mutableStateOf(false) }
-    var selectedHaircut by remember { mutableStateOf<Haircut?>(null) }
+fun BarberDetailScreen(navController: NavController, barberName: String) {
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(barberName) }
-            )
+            CenterAlignedTopAppBar(title = { Text(barberName) })
         }
     ) { padding ->
 
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(24.dp)
+                .padding(16.dp)
         ) {
 
-            Text(
-                text = "Acerca de $barberName",
-                style = MaterialTheme.typography.titleLarge
+            Image(
+                painter = painterResource(
+                    when (barberName) {
+                        "BarberLeoMX" -> R.drawable.leo
+                        "Doberman" -> R.drawable.doberman
+                        else -> R.drawable.blassed
+                    }
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
             )
 
             Spacer(Modifier.height(16.dp))
 
-            Text(
-                text = "Barbería comprometida con la calidad, estilo y atención personalizada."
-            )
+            Text("Acerca de la barbería", style = MaterialTheme.typography.titleLarge)
+            Text("Especialistas en estilo, precisión y atención personalizada.")
 
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(16.dp))
+
+            Text("Cortes", style = MaterialTheme.typography.titleLarge)
+
+            HaircutItem("Corte clásico", "$150")
+            HaircutItem("Fade", "$180")
+            HaircutItem("Barba", "$100")
+
+            Spacer(Modifier.height(16.dp))
+
+            Text("Formas de pago", style = MaterialTheme.typography.titleLarge)
+            Text("💳 Tarjeta")
+            Text("💵 Efectivo")
+            Text("📲 Transferencia")
+
+            Spacer(Modifier.height(24.dp))
 
             Button(
-                onClick = { showHaircutSheet = true },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Elegir tipo de corte")
-            }
-
-            selectedHaircut?.let {
-                Spacer(Modifier.height(24.dp))
-
-                Text(
-                    text = "Corte seleccionado:",
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Spacer(Modifier.height(8.dp))
-
-                Text("${it.name} - ${it.price}")
-            }
-
-            Spacer(Modifier.height(32.dp))
-
-            OutlinedButton(
                 onClick = { navController.popBackStack() },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -76,15 +70,23 @@ fun BarberDetailScreen(
             }
         }
     }
+}
 
-    // 🔽 Bottom Sheet
-    if (showHaircutSheet) {
-        HaircutBottomSheet(
-            onDismiss = { showHaircutSheet = false },
-            onConfirm = { haircut ->
-                selectedHaircut = haircut
-                showHaircutSheet = false
-            }
-        )
+@Composable
+fun HaircutItem(name: String, price: String) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+    ) {
+        Row(
+            Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(name)
+            Text(price)
+        }
     }
 }
