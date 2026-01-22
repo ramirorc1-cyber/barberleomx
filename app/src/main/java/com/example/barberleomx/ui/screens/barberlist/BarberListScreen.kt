@@ -7,31 +7,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.barberleomx.ui.navigation.BottomBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BarberListScreen(navController: NavController) {
 
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Barberías") }
-            )
+        bottomBar = {
+            BottomBar(navController)
         }
     ) { padding ->
-
         Column(
             modifier = Modifier
                 .padding(padding)
                 .padding(16.dp)
         ) {
+            // TU CONTENIDO ACTUAL DE BARBERÍAS
+        }
+    }
+
 
             BarberItem("BarberLeoMX", navController)
             BarberItem("Doberman", navController)
             BarberItem("Blassed", navController)
         }
-    }
-}
+
 
 @Composable
 fun BarberItem(

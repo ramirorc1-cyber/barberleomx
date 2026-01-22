@@ -12,11 +12,11 @@ class SessionManager(context: Context) {
         prefs.edit().putBoolean("logged", true).apply()
     }
 
-    fun isLogged(): Boolean {
-        return prefs.getBoolean("logged", false)
-    }
-
     fun logout() {
         prefs.edit().clear().apply()
+    }
+
+    fun isLogged(): Boolean {
+        return prefs.getBoolean("logged", false)
     }
 }

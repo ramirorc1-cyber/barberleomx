@@ -6,9 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.example.barberleomx.ui.screens.barber.BarberDetailScreen
 import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
-import com.example.barberleomx.ui.screens.login.LoginScreen
+import com.example.barberleomx.ui.screens.barber.BarberDetailScreen
+import com.example.barberleomx.ui.screens.home.HomeScreen
+import com.example.barberleomx.ui.screens.perfil.PerfilScreen
+
 
 @Composable
 fun NavGraph(
@@ -17,11 +19,19 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = "home"
     ) {
 
-        composable("login") {
-            LoginScreen(navController)
+        composable("home") {
+            HomeScreen(navController)
+        }
+
+        composable("services") {
+            ServicesScreen()
+        }
+
+        composable("profile") {
+            PerfilScreen(navController)
         }
 
         composable("barber_list") {
@@ -29,10 +39,8 @@ fun NavGraph(
         }
 
         composable(
-            route = "barber_detail/{name}",
-            arguments = listOf(
-                navArgument("name") { type = NavType.StringType }
-            )
+            "barber_detail/{name}",
+            arguments = listOf(navArgument("name") { type = NavType.StringType })
         ) {
             BarberDetailScreen(
                 navController = navController,
@@ -40,4 +48,5 @@ fun NavGraph(
             )
         }
     }
+
 }
