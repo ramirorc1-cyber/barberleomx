@@ -1,6 +1,6 @@
 package com.example.barberleomx.ui.data.repository
 
-import com.example.barberleomx.ui.data.dao.BookingDao
+import com.example.barberleomx.ui.data.local.entity.dao.BookingDao
 import com.example.barberleomx.ui.data.model.Booking
 import kotlinx.coroutines.flow.Flow
 

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.barberleomx.ui.data.dao.BookingDao
+import com.example.barberleomx.ui.data.local.entity.dao.BookingDao
 import com.example.barberleomx.ui.data.model.Booking
 
 @Database(entities = [Booking::class], version = 1)

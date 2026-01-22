@@ -1,4 +1,4 @@
-package com.example.barberleomx.ui.data.dao
+package com.example.barberleomx.ui.data.local.entity.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
