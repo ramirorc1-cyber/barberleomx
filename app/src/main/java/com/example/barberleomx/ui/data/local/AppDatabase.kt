@@ -1,4 +1,4 @@
-package com.example.barberleomx.data.local
+package com.example.barberleomx.ui.data.local
 
 import android.content.Context
 import androidx.room.Database
