@@ -63,9 +63,11 @@ fun BarberDetailScreen(
             Spacer(Modifier.height(24.dp))
 
             BarberServicesSection { service ->
-                // aquí después mandamos a pagos
-                println("Servicio seleccionado: ${service.name} - ${service.price}")
+                navController.navigate(
+                    "payment/${service.name}/${service.price}"
+                )
             }
+
 
             Button(
                 onClick = { showProfile = true },
