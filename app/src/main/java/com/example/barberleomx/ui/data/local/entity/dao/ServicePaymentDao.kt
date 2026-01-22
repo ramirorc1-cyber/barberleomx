@@ -9,11 +9,8 @@ import com.example.barberleomx.ui.data.local.entity.ServicePaymentEntity
 interface ServicePaymentDao {
 
     @Insert
-    suspend fun insertPayment(payment: ServicePaymentEntity)
+    suspend fun insert(servicePayment: ServicePaymentEntity)
 
-    @Query("SELECT * FROM payments ORDER BY date DESC")
-    suspend fun getAllPayments(): List<ServicePaymentEntity>
-
-    @Query("SELECT SUM(price) FROM payments")
-    suspend fun getTotalSpent(): Int?
+    @Query("SELECT * FROM service_payments WHERE paymentId = :paymentId")
+    suspend fun getServicesForPayment(paymentId: Int): List<ServicePaymentEntity>
 }

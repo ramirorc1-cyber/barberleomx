@@ -16,15 +16,16 @@ import androidx.navigation.NavController
 import com.example.barberleomx.ui.data.FakeBarberData
 import com.example.barberleomx.ui.model.Barber
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BarberListScreen(navController: NavController) {
+
     Scaffold(
         topBar = {
             TopAppBar(title = { Text("Barberías") })
         }
     ) { padding ->
+
         LazyColumn(
             modifier = Modifier
                 .padding(padding)
@@ -42,18 +43,20 @@ fun BarberListScreen(navController: NavController) {
 
 @Composable
 fun BarberCard(barber: Barber, onClick: () -> Unit) {
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        elevation = CardDefaults.cardElevation(6.dp)
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Image(
-                painter = painterResource(id = barber.image),
+                painter = painterResource(barber.image),
                 contentDescription = barber.name,
                 modifier = Modifier.size(72.dp)
             )
@@ -62,13 +65,12 @@ fun BarberCard(barber: Barber, onClick: () -> Unit) {
 
             Column {
                 Text(
-                    text = barber.name,
+                    barber.name,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.titleMedium
                 )
-                Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = barber.description,
+                    barber.description,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

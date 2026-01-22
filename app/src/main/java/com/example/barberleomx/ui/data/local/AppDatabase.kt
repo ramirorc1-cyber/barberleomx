@@ -1,34 +1,22 @@
 package com.example.barberleomx.ui.data.local
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.barberleomx.ui.data.local.entity.dao.ServicePaymentDao
-import com.example.barberleomx.ui.data.local.entity.ServicePaymentEntity
+import com.example.barberleomx.ui.data.local.entity.*
+import com.example.barberleomx.ui.data.local.entity.dao.*
 
 @Database(
-    entities = [ServicePaymentEntity::class],
-    version = 1
+    entities = [
+        Payment::class,
+        Booking::class,
+        ServicePaymentEntity::class
+    ],
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun paymentDao(): ServicePaymentDao
-
-    companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-
-        fun getDatabase(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "barber_db"
-                ).build()
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
+    abstract fun paymentDao(): PaymentDao
+    abstract fun bookingDao(): BookingDao
+    abstract fun servicePaymentDao(): ServicePaymentDao
 }

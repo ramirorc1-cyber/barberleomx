@@ -8,17 +8,17 @@ object FakeBarberData {
     val barberList = listOf(
         Barber(
             name = "BarberLeoMX",
-            description = "Cortes clásicos y modernos con atención profesional.",
+            description = "Cortes clásicos y modernos con estilo.",
             image = R.drawable.leo
         ),
         Barber(
             name = "Doberman",
-            description = "Estilo urbano, precisión y carácter.",
+            description = "Estilo urbano y atención premium.",
             image = R.drawable.doberman
         ),
         Barber(
             name = "Blassed",
-            description = "Barbería moderna con acabados premium.",
+            description = "Barbería moderna y profesional.",
             image = R.drawable.blessed
         )
     )

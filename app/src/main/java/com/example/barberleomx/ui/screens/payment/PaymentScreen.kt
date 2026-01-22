@@ -1,42 +1,28 @@
 package com.example.barberleomx.ui.screens.payment
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.barberleomx.ui.data.local.AppDatabase
+import com.example.barberleomx.ui.data.local.entity.Payment
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentScreen(
-    navController: NavController,
-    serviceName: String,
-    servicePrice: Int
+    total: Int,
+    navController: NavController
 ) {
-
-    var paymentMethod by remember { mutableStateOf("Efectivo") }
+    var selectedMethod by remember { mutableStateOf("Efectivo") }
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Pago del servicio") }
+            TopAppBar(
+                title = { Text("Pago") }
             )
         }
     ) { padding ->
@@ -45,45 +31,101 @@ fun PaymentScreen(
             modifier = Modifier
                 .padding(padding)
                 .padding(16.dp)
-                .fillMaxSize()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
 
-            Text("Resumen", style = MaterialTheme.typography.titleLarge)
-            Spacer(Modifier.height(8.dp))
-            Text("Servicio: $serviceName")
-            Text("Precio: $$servicePrice")
-
-            Spacer(Modifier.height(24.dp))
-
-            Text("Método de pago", style = MaterialTheme.typography.titleLarge)
-
-            Row {
-                RadioButton(
-                    selected = paymentMethod == "Efectivo",
-                    onClick = { paymentMethod = "Efectivo" }
+            Column {
+                Text(
+                    text = "Total a pagar",
+                    style = MaterialTheme.typography.titleMedium
                 )
-                Text("Efectivo", modifier = Modifier.padding(start = 8.dp))
+
+                Text(
+                    text = "$$total MXN",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = "Método de pago",
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                PaymentOption(
+                    title = "Efectivo",
+                    selected = selectedMethod == "Efectivo"
+                ) {
+                    selectedMethod = "Efectivo"
+                }
+
+                PaymentOption(
+                    title = "Tarjeta",
+                    selected = selectedMethod == "Tarjeta"
+                ) {
+                    selectedMethod = "Tarjeta"
+                }
             }
 
-            Row {
-                RadioButton(
-                    selected = paymentMethod == "Tarjeta",
-                    onClick = { paymentMethod = "Tarjeta" }
-                )
-                Text("Tarjeta", modifier = Modifier.padding(start = 8.dp))
-            }
-
-            Spacer(Modifier.height(32.dp))
+            val context = LocalContext.current
 
             Button(
                 onClick = {
-                    // luego aquí se guarda en SQLite
-                    navController.popBackStack()
+                    val db = AppDatabase.getDatabase(context)
+
+                    LaunchedEffect(key1 = Unit) {
+                        db.paymentDao().insert(
+                            Payment(
+                                barberName = "BarberLeoMX",
+                                total = total,
+                                method = selectedMethod
+                            )
+                        )
+
+                        navController.navigate("barber_list") {
+                            popUpTo("barber_list") { inclusive = true }
+                        }
+                    }
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Confirmar pago")
             }
+
+        }
+    }
+}
+
+@Composable
+fun PaymentOption(
+    title: String,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (selected)
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+            else
+                MaterialTheme.colorScheme.surface
+        ),
+        onClick = onClick
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(title, style = MaterialTheme.typography.titleMedium)
+            RadioButton(selected = selected, onClick = onClick)
         }
     }
 }

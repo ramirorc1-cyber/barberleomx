@@ -1,20 +1,22 @@
 package com.example.barberleomx.ui.session
 
 import android.content.Context
+import android.content.SharedPreferences
 
 class SessionManager(context: Context) {
 
-    private val prefs = context.getSharedPreferences("barber_session", Context.MODE_PRIVATE)
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences("barber_session", Context.MODE_PRIVATE)
 
-    fun setLoggedIn(value: Boolean) {
-        prefs.edit().putBoolean("isLoggedIn", value).apply()
-    }
-
-    fun isLoggedIn(): Boolean {
-        return prefs.getBoolean("isLoggedIn", false)
+    fun login() {
+        prefs.edit().putBoolean("logged_in", true).apply()
     }
 
     fun logout() {
         prefs.edit().clear().apply()
+    }
+
+    fun isLoggedIn(): Boolean {
+        return prefs.getBoolean("logged_in", false)
     }
 }
