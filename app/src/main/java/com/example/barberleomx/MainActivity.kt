@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
 
             NavGraph(
                 navController = navController,
-                startDestination = "login" // 👈 SIN splash por ahora
+                startDestination = "login"
             )
         }
     }

@@ -9,11 +9,11 @@ class SessionManager(context: Context) {
         context.getSharedPreferences("barber_session", Context.MODE_PRIVATE)
 
     fun saveLogin() {
-        prefs.edit().putBoolean("logged", true).apply()
+        prefs.edit().putBoolean("is_logged", true).apply()
     }
 
     fun isLogged(): Boolean {
-        return prefs.getBoolean("logged", false)
+        return prefs.getBoolean("is_logged", false)
     }
 
     fun logout() {

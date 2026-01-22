@@ -3,16 +3,12 @@ package com.example.barberleomx.ui.screens.barber
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.barberleomx.R
-import com.example.barberleomx.data.local.entity.ServicePaymentEntity
-import com.example.barberleomx.ui.data.local.AppDatabase
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,12 +16,6 @@ fun BarberDetailScreen(
     barberName: String,
     navController: NavController
 ) {
-
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val db = remember { AppDatabase.getDatabase(context) }
-
-    var paymentMethod by remember { mutableStateOf("Efectivo") }
 
     Scaffold(
         topBar = {
@@ -44,7 +34,6 @@ fun BarberDetailScreen(
             modifier = Modifier
                 .padding(padding)
                 .padding(16.dp)
-                .fillMaxSize()
         ) {
 
             Image(
@@ -58,53 +47,29 @@ fun BarberDetailScreen(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp)
+                    .height(200.dp)
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Servicio", style = MaterialTheme.typography.titleLarge)
-            Text("Corte clásico - $150")
+            Text(
+                text = "Acerca de la barbería",
+                style = MaterialTheme.typography.titleLarge
+            )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-            Text("Forma de pago", style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = "Barbería comprometida con la calidad, el estilo y una excelente atención al cliente."
+            )
 
-            Row {
-                RadioButton(
-                    selected = paymentMethod == "Efectivo",
-                    onClick = { paymentMethod = "Efectivo" }
-                )
-                Text("Efectivo")
-            }
-
-            Row {
-                RadioButton(
-                    selected = paymentMethod == "Tarjeta",
-                    onClick = { paymentMethod = "Tarjeta" }
-                )
-                Text("Tarjeta")
-            }
-
-            Spacer(Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = {
-                    scope.launch {
-                        db.paymentDao().insertPayment(
-                            ServicePaymentEntity(
-                                barberName = barberName,
-                                serviceName = "Corte clásico",
-                                price = 150,
-                                paymentMethod = paymentMethod,
-                                date = System.currentTimeMillis()
-                            )
-                        )
-                    }
-                },
+                onClick = { /* siguiente sprint: servicios */ },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Confirmar pago")
+                Text("Ver servicios")
             }
         }
     }
