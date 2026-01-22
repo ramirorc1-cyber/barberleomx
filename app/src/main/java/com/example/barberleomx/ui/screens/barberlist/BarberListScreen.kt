@@ -32,22 +32,19 @@ fun BarberListScreen(navController: NavController) {
 
             BarberCard(
                 name = "BarberLeoMX",
-                description = "Estilo clásico y moderno con atención personalizada.",
                 imageRes = R.drawable.leo,
                 navController = navController
             )
 
             BarberCard(
                 name = "Doberman",
-                description = "Cortes urbanos y barba profesional.",
                 imageRes = R.drawable.doberman,
                 navController = navController
             )
 
             BarberCard(
                 name = "Blassed",
-                description = "Elegancia, precisión y buen ambiente.",
-                imageRes = R.drawable.blassed,
+                imageRes = R.drawable.blessed,
                 navController = navController
             )
         }
@@ -57,7 +54,6 @@ fun BarberListScreen(navController: NavController) {
 @Composable
 fun BarberCard(
     name: String,
-    description: String,
     imageRes: Int,
     navController: NavController
 ) {
@@ -67,30 +63,29 @@ fun BarberCard(
             .padding(vertical = 8.dp)
             .clickable {
                 navController.navigate("barber_detail/$name")
-            },
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+            }
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(16.dp)
         ) {
 
             Image(
                 painter = painterResource(imageRes),
-                contentDescription = null,
-                modifier = Modifier.size(64.dp)
+                contentDescription = name,
+                modifier = Modifier
+                    .size(64.dp)
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(Modifier.width(16.dp))
 
             Column {
                 Text(
                     text = name,
                     style = MaterialTheme.typography.titleMedium
                 )
-                Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = description,
+                    text = "Ver detalles de la barbería",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

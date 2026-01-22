@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.barberleomx.data.local.dao.ServicePaymentDao
-import com.example.barberleomx.data.local.entity.ServicePaymentEntity
+import com.example.barberleomx.ui.data.local.entity.dao.ServicePaymentDao
+import com.example.barberleomx.ui.data.local.entity.ServicePaymentEntity
 
 @Database(
     entities = [ServicePaymentEntity::class],

@@ -1,12 +1,13 @@
 package com.example.barberleomx.ui.session
 
 import android.content.Context
-import android.content.SharedPreferences
 
 class SessionManager(context: Context) {
 
-    private val prefs: SharedPreferences =
-        context.getSharedPreferences("barber_session", Context.MODE_PRIVATE)
+    private val prefs = context.getSharedPreferences(
+        "barber_session",
+        Context.MODE_PRIVATE
+    )
 
     fun saveLogin() {
         prefs.edit().putBoolean("is_logged", true).apply()

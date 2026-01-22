@@ -2,23 +2,27 @@ package com.example.barberleomx.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.example.barberleomx.ui.screens.login.LoginScreen
-import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
 import com.example.barberleomx.ui.screens.barber.BarberDetailScreen
+import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
+import com.example.barberleomx.ui.screens.login.LoginScreen
+import com.example.barberleomx.ui.screens.splash.SplashScreen
 
 @Composable
 fun NavGraph(
-    navController: NavHostController,
-    startDestination: String
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = "splash"
     ) {
+
+        composable("splash") {
+            SplashScreen(navController)
+        }
 
         composable("login") {
             LoginScreen(navController)
@@ -33,10 +37,9 @@ fun NavGraph(
             arguments = listOf(
                 navArgument("name") { type = NavType.StringType }
             )
-        ) { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("name") ?: ""
+        ) {
             BarberDetailScreen(
-                barberName = name,
+                barberName = it.arguments?.getString("name") ?: "",
                 navController = navController
             )
         }

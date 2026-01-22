@@ -15,8 +15,7 @@ class MainActivity : ComponentActivity() {
 
             NavGraph(
                 navController = navController,
-                startDestination = "login"
-            )
+                )
         }
     }
 }

@@ -1,9 +1,9 @@
-package com.example.barberleomx.data.local.dao
+package com.example.barberleomx.ui.data.local.entity.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.barberleomx.data.local.entity.ServicePaymentEntity
+import com.example.barberleomx.ui.data.local.entity.ServicePaymentEntity
 
 @Dao
 interface ServicePaymentDao {

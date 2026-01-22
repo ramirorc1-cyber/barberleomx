@@ -1,4 +1,4 @@
-package com.example.barberleomx.data.local.entity
+package com.example.barberleomx.ui.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
