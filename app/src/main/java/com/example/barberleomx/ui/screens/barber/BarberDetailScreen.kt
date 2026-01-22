@@ -7,14 +7,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.example.barberleomx.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BarberDetailScreen(
-    barberName: String,
-    navController: NavHostController
+    navController: NavController,
+    barberName: String
 ) {
 
     var showProfile by remember { mutableStateOf(false) }
@@ -66,6 +66,15 @@ fun BarberDetailScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Ver perfil del barbero")
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            OutlinedButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Volver")
             }
         }
     }
