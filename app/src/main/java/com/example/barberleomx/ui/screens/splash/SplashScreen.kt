@@ -20,24 +20,22 @@ fun SplashScreen(navController: NavController) {
     val sessionManager = remember { SessionManager(context) }
 
     LaunchedEffect(true) {
-        delay(6000)
+        delay(3000)
         if (sessionManager.isLogged()) {
-            navController.navigate(Routes.BARBER_LIST) {
-                popUpTo(Routes.SPLASH) { inclusive = true }
+            navController.navigate("barber_list") {
+                popUpTo("splash") { inclusive = true }
             }
         } else {
-            navController.navigate(Routes.LOGIN) {
-                popUpTo(Routes.SPLASH) { inclusive = true }
+            navController.navigate("login") {
+                popUpTo("splash") { inclusive = true }
             }
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(R.drawable.inicio_app),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-    }
+    Image(
+        painter = painterResource(R.drawable.inicio_app),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.fillMaxSize()
+    )
 }
