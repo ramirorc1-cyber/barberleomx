@@ -1,12 +1,10 @@
 package com.example.barberleomx.ui.navigation
 
-sealed class Routes(val route: String) {
-    object Dashboard : Routes("dashboard")
-
-    object Booking : Routes("booking")
-    object Services : Routes("services")
-    object Barbers : Routes("barbers")
-    object Location : Routes("location")
-    object Reviews : Routes("reviews")
-    object Settings : Routes("settings")
+object Routes {
+    const val SPLASH = "splash"
+    const val LOGIN = "login"
+    const val BARBER_LIST = "barber_list"
+    const val BARBER_DETAIL = "barber_detail"
+    const val PROFILE = "profile"
+    const val GASTOS = "gastos"
 }
