@@ -7,36 +7,50 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.barberleomx.ui.navigation.BottomBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BarberListScreen(navController: NavController) {
 
     Scaffold(
-        bottomBar = {
-            BottomBar(navController)
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text("Selecciona una barbería") }
+            )
         }
     ) { padding ->
+
         Column(
             modifier = Modifier
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            // TU CONTENIDO ACTUAL DE BARBERÍAS
+
+            BarberItem(
+                name = "BarberLeoMX",
+                description = "Barbería profesional",
+                navController = navController
+            )
+
+            BarberItem(
+                name = "Blassed",
+                description = "Estilo urbano",
+                navController = navController
+            )
+
+            BarberItem(
+                name = "Doberman",
+                description = "Cortes clásicos",
+                navController = navController
+            )
         }
     }
-
-
-            BarberItem("BarberLeoMX", navController)
-            BarberItem("Doberman", navController)
-            BarberItem("Blassed", navController)
-        }
-
+}
 
 @Composable
 fun BarberItem(
     name: String,
+    description: String,
     navController: NavController
 ) {
     Card(
@@ -47,10 +61,10 @@ fun BarberItem(
                 navController.navigate("barber_detail/$name")
             }
     ) {
-        Text(
-            text = name,
-            modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.titleMedium
-        )
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = name, style = MaterialTheme.typography.titleMedium)
+            Spacer(Modifier.height(4.dp))
+            Text(text = description, style = MaterialTheme.typography.bodyMedium)
+        }
     }
 }
