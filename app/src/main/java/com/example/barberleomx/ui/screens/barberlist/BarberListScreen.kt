@@ -3,89 +3,72 @@ package com.example.barberleomx.ui.screens.barberlist
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.barberleomx.R
+import com.example.barberleomx.ui.data.FakeBarberData
+import com.example.barberleomx.ui.model.Barber
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BarberListScreen(navController: NavController) {
-
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Barberías") }
-            )
+            TopAppBar(title = { Text("Barberías") })
         }
     ) { padding ->
-
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(padding)
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-
-            BarberCard(
-                name = "BarberLeoMX",
-                imageRes = R.drawable.leo,
-                navController = navController
-            )
-
-            BarberCard(
-                name = "Doberman",
-                imageRes = R.drawable.doberman,
-                navController = navController
-            )
-
-            BarberCard(
-                name = "Blassed",
-                imageRes = R.drawable.blessed,
-                navController = navController
-            )
+            items(FakeBarberData.barberList) { barber ->
+                BarberCard(barber) {
+                    navController.navigate("barber_detail/${barber.name}")
+                }
+            }
         }
     }
 }
 
 @Composable
-fun BarberCard(
-    name: String,
-    imageRes: Int,
-    navController: NavController
-) {
+fun BarberCard(barber: Barber, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clickable {
-                navController.navigate("barber_detail/$name")
-            }
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-
             Image(
-                painter = painterResource(imageRes),
-                contentDescription = name,
-                modifier = Modifier
-                    .size(64.dp)
+                painter = painterResource(id = barber.image),
+                contentDescription = barber.name,
+                modifier = Modifier.size(72.dp)
             )
 
-            Spacer(Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(16.dp))
 
             Column {
                 Text(
-                    text = name,
+                    text = barber.name,
+                    fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.titleMedium
                 )
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Ver detalles de la barbería",
+                    text = barber.description,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

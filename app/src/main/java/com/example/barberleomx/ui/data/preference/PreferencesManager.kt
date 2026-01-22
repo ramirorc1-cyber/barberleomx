@@ -8,20 +8,16 @@ class PreferencesManager(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences("barber_prefs", Context.MODE_PRIVATE)
 
-    fun saveLogin(email: String) {
-        prefs.edit()
-            .putBoolean("is_logged", true)
-            .putString("email", email)
-            .apply()
+    fun setLoggedIn(value: Boolean) {
+        prefs.edit().putBoolean("logged_in", value).apply()
     }
 
     fun isLoggedIn(): Boolean {
-        return prefs.getBoolean("is_logged", false)
+        return prefs.getBoolean("logged_in", false)
     }
 
     fun logout() {
-        prefs.edit()
-            .clear()
-            .apply()
+        prefs.edit().clear().apply()
     }
 }
+

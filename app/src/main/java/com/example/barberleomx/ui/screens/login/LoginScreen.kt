@@ -8,14 +8,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.barberleomx.utils.PreferencesManager
+import com.example.barberleomx.ui.session.SessionManager
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController) {
 
     val context = LocalContext.current
-    val prefs = remember { PreferencesManager(context) }
+    val sessionManager = remember { SessionManager(context) }
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -27,12 +26,9 @@ fun LoginScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center
     ) {
 
-        Text(
-            text = "BarberLeoMX",
-            style = MaterialTheme.typography.headlineLarge
-        )
+        Text("Iniciar sesión", style = MaterialTheme.typography.headlineMedium)
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = email,
@@ -41,7 +37,7 @@ fun LoginScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
             value = password,
@@ -51,22 +47,21 @@ fun LoginScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            modifier = Modifier.fillMaxWidth(),
             onClick = {
+                // Login simple (PMV)
                 if (email.isNotBlank() && password.isNotBlank()) {
-                    prefs.saveLogin(email)
+                    sessionManager.setLoggedIn(true)
                     navController.navigate("barber_list") {
                         popUpTo("login") { inclusive = true }
                     }
                 }
-            }
+            },
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Iniciar sesión")
+            Text("Ingresar")
         }
     }
 }
-
-private fun PreferencesManager.saveLogin(email: String) {}
