@@ -21,7 +21,8 @@ fun SplashScreen(navController: NavController) {
     LaunchedEffect(true) {
         delay(2000)
 
-        if (sessionManager.isLoggedIn()) {
+        if (sessionManager.isLogged()) {
+
 
             navController.navigate("barber_list") {
                 popUpTo("splash") { inclusive = true }

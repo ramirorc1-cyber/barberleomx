@@ -1,29 +1,42 @@
 package com.example.barberleomx.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.*
-import androidx.navigation.compose.*
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.barberleomx.ui.screens.barber.BarberDetailScreen
 import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
 import com.example.barberleomx.ui.screens.login.LoginScreen
-import com.example.barberleomx.ui.screens.splash.SplashScreen
 
 @Composable
-fun NavGraph(navController: NavHostController, startDestination: String) {
+fun NavGraph(
+    navController: NavHostController,
+    startDestination: String
+) {
+    NavHost(
+        navController = navController,
+        startDestination = startDestination
+    ) {
 
-    NavHost(navController, startDestination = startDestination) {
+        composable("login") {
+            LoginScreen(navController)
+        }
 
-        composable(startDestination) { SplashScreen(navController) }
-        composable("login") { LoginScreen(navController) }
-        composable("barber_list") { BarberListScreen(navController) }
+        composable("barber_list") {
+            BarberListScreen(navController)
+        }
 
         composable(
-            "barber_detail/{name}",
-            arguments = listOf(navArgument("name") { type = NavType.StringType })
+            route = "barber_detail/{name}",
+            arguments = listOf(
+                navArgument("name") { type = NavType.StringType }
+            )
         ) {
             BarberDetailScreen(
-                navController,
-                it.arguments?.getString("name") ?: ""
+                navController = navController,
+                barberName = it.arguments?.getString("name") ?: ""
             )
         }
     }

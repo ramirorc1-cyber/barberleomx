@@ -44,22 +44,25 @@ android {
 
 dependencies {
 
-    // ====== ROOM (OBLIGATORIO) ======
+    // ===== COMPOSE =====
+    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+
+    // ICONOS MATERIAL (ESTE ES EL QUE FALTABA)
+    implementation("androidx.compose.material:material-icons-core")
+    implementation("androidx.compose.material:material-icons-extended")
+
+    // NAVIGATION
+    implementation("androidx.navigation:navigation-compose:2.8.5")
+
+    // ===== ROOM =====
     implementation("androidx.room:room-runtime:2.6.1")
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.compose)
-    kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
 
-    // ====== COROUTINES (OBLIGATORIO PARA ROOM + FLOW) ======
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-
+    // ===== COROUTINES =====
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    
 }
 
-kapt {
-    correctErrorTypes = true
-}

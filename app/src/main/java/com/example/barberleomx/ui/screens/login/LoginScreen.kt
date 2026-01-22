@@ -13,24 +13,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.barberleomx.R
-import androidx.compose.ui.platform.LocalContext
-import com.example.barberleomx.ui.session.SessionManager
 
 @Composable
 fun LoginScreen(navController: NavController) {
-
-    val context = LocalContext.current
-    val sessionManager = SessionManager(context)
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        // 🔹 Imagen de fondo (pantalla completa)
         Image(
-            painter = painterResource(id = R.drawable.barber),
-            contentDescription = "Fondo Login",
+            painter = painterResource(R.drawable.barber),
+            contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
@@ -51,13 +45,12 @@ fun LoginScreen(navController: NavController) {
                     focusedBorderColor = Color.Red,
                     unfocusedBorderColor = Color.Red,
                     focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    cursorColor = Color.Red
+                    unfocusedTextColor = Color.White
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(Modifier.height(12.dp))
 
             OutlinedTextField(
                 value = password,
@@ -68,31 +61,23 @@ fun LoginScreen(navController: NavController) {
                     focusedBorderColor = Color.Red,
                     unfocusedBorderColor = Color.Red,
                     focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    cursorColor = Color.Red
+                    unfocusedTextColor = Color.White
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            val context = LocalContext.current
-            val sessionManager = remember { SessionManager(context) }
+            Spacer(Modifier.height(24.dp))
 
             Button(
                 onClick = {
-                    if (email.isNotBlank() && password.isNotBlank()) {
-                        sessionManager.saveLogin(email)
-                        navController.navigate("barber_list") {
-                            popUpTo("login") { inclusive = true }
-                        }
+                    navController.navigate("barber_list") {
+                        popUpTo("login") { inclusive = true }
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Iniciar sesión")
             }
-
 
         }
     }
