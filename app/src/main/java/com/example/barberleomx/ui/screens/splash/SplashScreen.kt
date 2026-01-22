@@ -3,12 +3,12 @@ package com.example.barberleomx.ui.screens.splash
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.barberleomx.R
+import com.example.barberleomx.ui.navigation.Routes
 import com.example.barberleomx.ui.session.SessionManager
 import kotlinx.coroutines.delay
 import androidx.compose.ui.platform.LocalContext
@@ -20,28 +20,24 @@ fun SplashScreen(navController: NavController) {
     val sessionManager = remember { SessionManager(context) }
 
     LaunchedEffect(true) {
-        delay(6000) // ⏱️ splash con duración que pediste
-
+        delay(6000)
         if (sessionManager.isLogged()) {
-            navController.navigate("barber_list") {
-                popUpTo("splash") { inclusive = true }
+            navController.navigate(Routes.BARBER_LIST) {
+                popUpTo(Routes.SPLASH) { inclusive = true }
             }
         } else {
-            navController.navigate("login") {
-                popUpTo("splash") { inclusive = true }
+            navController.navigate(Routes.LOGIN) {
+                popUpTo(Routes.SPLASH) { inclusive = true }
             }
         }
     }
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(R.drawable.inicio_app),
             contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
         )
     }
 }
