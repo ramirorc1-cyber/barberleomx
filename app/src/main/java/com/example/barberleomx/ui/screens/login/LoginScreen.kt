@@ -1,66 +1,82 @@
 package com.example.barberleomx.ui.screens.login
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import com.example.barberleomx.R
 
 @Composable
 fun LoginScreen(navController: NavController) {
 
     var user by remember { mutableStateOf("") }
-    var pass by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-
-        Image(
-            painter = painterResource(id = R.drawable.barber),
-            contentDescription = "Logo",
-            modifier = Modifier.size(160.dp)
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        OutlinedTextField(
-            value = user,
-            onValueChange = { user = it },
-            label = { Text("Usuario") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = pass,
-            onValueChange = { pass = it },
-            label = { Text("Contraseña") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = {
-                navController.navigate("barber_list")
-            },
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier.fillMaxWidth(0.8f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text("Iniciar sesión")
+
+            Image(
+                painter = painterResource(id = R.drawable.barber),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+            )
+
+            Text(
+                text = "Iniciar sesión",
+                style = MaterialTheme.typography.headlineMedium
+            )
+
+            // inputs y botón...
         }
+         @androidx.compose.runtime.Composable fun() {
+             Text(
+                 text = "Iniciar sesión",
+                 style = MaterialTheme.typography.headlineMedium
+             )
+
+             OutlinedTextField(
+                 value = user,
+                 onValueChange = { user = it },
+                 label = { Text("Usuario") },
+                 modifier = Modifier.fillMaxWidth()
+             )
+
+             OutlinedTextField(
+                 value = password,
+                 onValueChange = { password = it },
+                 label = { Text("Contraseña") },
+                 visualTransformation = PasswordVisualTransformation(),
+                 modifier = Modifier.fillMaxWidth()
+             )
+
+             Button(
+                 onClick = {
+                     // Login simple (sin backend)
+                     navController.navigate("barber_list") {
+                         popUpTo("login") { inclusive = true }
+                     }
+                 },
+                 modifier = Modifier.fillMaxWidth()
+             ) {
+                 Text("Entrar")
+             }
+         }
     }
 }
-
