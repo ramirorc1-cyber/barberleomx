@@ -6,20 +6,30 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import com.example.barberleomx.ui.navigation.NavGraph
+import com.example.barberleomx.ui.theme.BarberLeoMXTheme
 
 class MainActivity : ComponentActivity() {
-    val prefs = getSharedPreferences("session", Context.MODE_PRIVATE)
-    val startDestination = if (prefs.getBoolean("logged", false)) {
-        "barber_list"
-    } else {
-        "login"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ✅ AQUÍ sí existe el Context
+        val prefs = getSharedPreferences("session", Context.MODE_PRIVATE)
+
+        val startDestination = if (prefs.getBoolean("logged", false)) {
+            "barber_list"
+        } else {
+            "login"
+        }
+
         setContent {
-            val navController = rememberNavController()
-            NavGraph(navController)
+            BarberLeoMXTheme {
+                val navController = rememberNavController()
+                NavGraph(
+                    navController = navController,
+                    startDestination = startDestination
+                )
+            }
         }
     }
 }

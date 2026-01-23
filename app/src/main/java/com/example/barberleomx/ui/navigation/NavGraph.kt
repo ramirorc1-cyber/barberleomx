@@ -11,7 +11,7 @@ import com.example.barberleomx.ui.screens.barber.BarberDetailScreen
 import com.example.barberleomx.ui.screens.payment.PaymentScreen
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, startDestination: String) {
 
     NavHost(
         navController = navController,
