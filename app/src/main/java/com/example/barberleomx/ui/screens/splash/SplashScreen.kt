@@ -27,8 +27,8 @@ fun SplashScreen(navController: NavController) {
     ) {
         Image(
             painter = painterResource(id = R.drawable.inicio_app),
-            contentDescription = "Logo",
-            modifier = Modifier.size(200.dp)
+            contentDescription = "Logo Barbería",
+            modifier = Modifier.size(220.dp)
         )
     }
 }
