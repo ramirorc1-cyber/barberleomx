@@ -2,16 +2,21 @@ package com.example.barberleomx.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.*
-import com.example.barberleomx.ui.screens.barber.BarberDetailScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.example.barberleomx.ui.screens.splash.SplashScreen
 import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
+import com.example.barberleomx.ui.screens.barber.BarberDetailScreen
+import com.example.barberleomx.ui.screens.payment.PaymentScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
 
-    NavHost(navController, startDestination = "splash") {
+    NavHost(
+        navController = navController,
+        startDestination = "splash"
+    ) {
 
         composable("splash") {
             SplashScreen(navController)
@@ -20,6 +25,7 @@ fun NavGraph(navController: NavHostController) {
         composable("login") {
             LoginScreen(navController)
         }
+
         composable("barber_list") {
             BarberListScreen(navController)
         }
@@ -31,8 +37,12 @@ fun NavGraph(navController: NavHostController) {
             )
         }
 
-        composable("barber_list") {
-            BarberListScreen(navController)
+        composable("payment/{name}/{total}") {
+            PaymentScreen(
+                barberName = it.arguments?.getString("name") ?: "",
+                total = it.arguments?.getString("total")?.toDouble() ?: 0.0,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }
