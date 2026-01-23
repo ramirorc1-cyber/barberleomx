@@ -3,7 +3,7 @@ package com.example.barberleomx.ui.screens.barberdetail
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,7 +25,7 @@ fun BarberDetailScreen(
         Service("Corte + Barba", 250)
     )
 
-    var total by remember { mutableStateOf(0) }
+    var total by remember { mutableIntStateOf(0) }
 
     Scaffold(
         topBar = {
@@ -34,7 +34,7 @@ fun BarberDetailScreen(
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Regresar"
                         )
                     }

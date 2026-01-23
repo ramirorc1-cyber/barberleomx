@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PaymentScreen(
     barberName: String,
-    total: Double,
+    total: Int,
     onBack: () -> Unit
 ) {
     Scaffold(

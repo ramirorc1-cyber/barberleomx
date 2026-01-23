@@ -12,11 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 
 @Composable
 fun LoginScreen(
-    navController: NavController
+    onLoginSuccess: () -> Unit
 ) {
     // ------------------------
     // ESTADOS
@@ -29,10 +28,11 @@ fun LoginScreen(
 
     var passwordVisible by remember { mutableStateOf(false) }
 
-    val isFormValid = emailError == null &&
-            passwordError == null &&
-            email.isNotBlank() &&
-            password.isNotBlank()
+    val isFormValid =
+        emailError == null &&
+                passwordError == null &&
+                email.isNotBlank() &&
+                password.isNotBlank()
 
     // ------------------------
     // UI
@@ -71,14 +71,12 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        if (emailError != null) {
+        emailError?.let {
             Text(
-                text = emailError!!,
+                text = it,
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(top = 4.dp)
+                modifier = Modifier.align(Alignment.Start)
             )
         }
 
@@ -91,41 +89,34 @@ fun LoginScreen(
             value = password,
             onValueChange = {
                 password = it
-                passwordError = if (it.isBlank()) {
-                    "La contraseña es obligatoria"
-                } else {
-                    null
-                }
+                passwordError =
+                    if (it.isBlank()) "La contraseña es obligatoria" else null
             },
             label = { Text("Contraseña") },
             singleLine = true,
             isError = passwordError != null,
-            visualTransformation = if (passwordVisible)
-                VisualTransformation.None
-            else
-                PasswordVisualTransformation(),
+            visualTransformation =
+                if (passwordVisible) VisualTransformation.None
+                else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
-                        imageVector = if (passwordVisible)
-                            Icons.Default.Visibility
-                        else
-                            Icons.Default.VisibilityOff,
-                        contentDescription = "Mostrar u ocultar contraseña"
+                        imageVector =
+                            if (passwordVisible) Icons.Default.Visibility
+                            else Icons.Default.VisibilityOff,
+                        contentDescription = null
                     )
                 }
             },
             modifier = Modifier.fillMaxWidth()
         )
 
-        if (passwordError != null) {
+        passwordError?.let {
             Text(
-                text = passwordError!!,
+                text = it,
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(top = 4.dp)
+                modifier = Modifier.align(Alignment.Start)
             )
         }
 
@@ -135,12 +126,7 @@ fun LoginScreen(
         // BOTÓN
         // ------------------------
         Button(
-            onClick = {
-                // SOLO navegación (sin BD, sin guardar sesión)
-                navController.navigate("barber_list") {
-                    popUpTo("login") { inclusive = true }
-                }
-            },
+            onClick = { onLoginSuccess() },
             enabled = isFormValid,
             modifier = Modifier
                 .fillMaxWidth()

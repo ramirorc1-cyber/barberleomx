@@ -4,43 +4,52 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.barberleomx.ui.screens.splash.SplashScreen
 import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
-import com.example.barberleomx.ui.screens.barber.BarberDetailScreen
+import com.example.barberleomx.ui.screens.barberdetail.BarberDetailScreen
 import com.example.barberleomx.ui.screens.payment.PaymentScreen
 
 @Composable
-fun NavGraph(navController: NavHostController, startDestination: String) {
-
+fun NavGraph(
+    navController: NavHostController,
+    startDestination: String
+) {
     NavHost(
         navController = navController,
-        startDestination = "splash"
+        startDestination = "login"
     ) {
 
-        composable("splash") {
-            SplashScreen(navController)
-        }
-
         composable("login") {
-            LoginScreen(navController)
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.navigate("barber_list") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                }
+            )
         }
 
         composable("barber_list") {
             BarberListScreen(navController)
         }
 
-        composable("barber_detail/{name}") {
+        composable("barber_detail/{barberName}") { backStackEntry ->
             BarberDetailScreen(
-                barberName = it.arguments?.getString("name") ?: "",
+                barberName = backStackEntry.arguments
+                    ?.getString("barberName")
+                    ?: "",
                 navController = navController
             )
         }
 
-        composable("payment/{name}/{total}") {
+        composable("payment/{barberName}/{total}") { backStackEntry ->
             PaymentScreen(
-                barberName = it.arguments?.getString("name") ?: "",
-                total = it.arguments?.getString("total")?.toDouble() ?: 0.0,
+                barberName = backStackEntry.arguments
+                    ?.getString("barberName")
+                    ?: "",
+                total = backStackEntry.arguments
+                    ?.getString("total")
+                    ?.toInt() ?: 0,
                 onBack = { navController.popBackStack() }
             )
         }
