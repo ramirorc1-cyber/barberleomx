@@ -10,9 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.barberleomx.ui.data.database.BarberDatabase
-import com.example.barberleomx.ui.data.model.Booking
-import com.example.barberleomx.ui.data.repository.BookingRepository
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
