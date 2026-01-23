@@ -14,7 +14,7 @@ import com.example.barberleomx.R
 fun SplashScreen(navController: NavController) {
 
     LaunchedEffect(Unit) {
-        delay(2000) // 2 segundos
+        delay(5000) // 2 segundos
         navController.navigate("login") {
             popUpTo("splash") { inclusive = true }
         }
