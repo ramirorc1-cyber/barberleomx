@@ -1,24 +1,27 @@
 package com.example.barberleomx.ui.screens.barberdetail
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 
 @Composable
 fun DireccionTab(
     barberName: String,
-    context: Context
+    padding: PaddingValues
 ) {
+    val context = LocalContext.current
+
     val barberLocations = listOf(
         BarberLocation(
             name = "Barbería Leo",
@@ -40,18 +43,29 @@ fun DireccionTab(
     val location = barberLocations.find { it.name == barberName }
 
     if (location == null) {
-        Text("Dirección no disponible")
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("Dirección no disponible")
+        }
         return
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 32.dp, start = 16.dp, end = 16.dp),
-        verticalArrangement = Arrangement.Top,
+            .padding(padding)
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Dirección", color = Color.Gray)
+        Text(
+            text = "Dirección",
+            style = MaterialTheme.typography.titleLarge,
+            color = Color.Gray
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -64,10 +78,10 @@ fun DireccionTab(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(location.mapsUrl))
+            val intent = Intent(Intent.ACTION_VIEW, location.mapsUrl.toUri())
             context.startActivity(intent)
         }) {
-            Text("Ver en mapa")
+            Text("Ver en Google Maps")
         }
     }
 }
