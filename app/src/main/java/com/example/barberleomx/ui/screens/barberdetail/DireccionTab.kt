@@ -1,5 +1,6 @@
 package com.example.barberleomx.ui.screens.barberdetail
 
+import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -18,7 +19,8 @@ import androidx.core.net.toUri
 @Composable
 fun DireccionTab(
     barberName: String,
-    padding: PaddingValues
+    padding: PaddingValues,
+    context: Context
 ) {
     val context = LocalContext.current
 
