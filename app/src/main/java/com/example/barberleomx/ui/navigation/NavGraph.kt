@@ -5,10 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.barberleomx.ui.screens.barberdetail.BarberDetailScreen
-import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
 import com.example.barberleomx.ui.screens.login.LoginScreen
+import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
 import com.example.barberleomx.ui.screens.payment.PaymentScreen
-import com.example.barberleomx.ui.screens.splash.SplashScreen
 
 @Composable
 fun NavGraph(
@@ -17,25 +16,9 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "splash"
+        startDestination = "login"
     ) {
 
-        // ------------------------
-        // SPLASH
-        // ------------------------
-        composable("splash") {
-            SplashScreen(
-                onFinish = {
-                    navController.navigate("login") {
-                        popUpTo("splash") { inclusive = true }
-                    }
-                }
-            )
-        }
-
-        // ------------------------
-        // LOGIN
-        // ------------------------
         composable("login") {
             LoginScreen(
                 onLoginSuccess = {
@@ -46,36 +29,21 @@ fun NavGraph(
             )
         }
 
-        // ------------------------
-        // LISTA DE BARBERÍAS
-        // ------------------------
         composable("barber_list") {
             BarberListScreen(navController)
         }
 
-        // ------------------------
-        // DETALLE BARBERÍA
-        // ------------------------
         composable("barber_detail/{barberName}") { backStackEntry ->
             BarberDetailScreen(
-                barberName = backStackEntry.arguments
-                    ?.getString("barberName")
-                    ?: "",
+                barberName = backStackEntry.arguments?.getString("barberName") ?: "",
                 navController = navController
             )
         }
 
-        // ------------------------
-        // PAGOS
-        // ------------------------
         composable("payment/{barberName}/{total}") { backStackEntry ->
             PaymentScreen(
-                barberName = backStackEntry.arguments
-                    ?.getString("barberName")
-                    ?: "",
-                total = backStackEntry.arguments
-                    ?.getString("total")
-                    ?.toInt() ?: 0,
+                barberName = backStackEntry.arguments?.getString("barberName") ?: "",
+                total = backStackEntry.arguments?.getString("total")?.toInt() ?: 0,
                 onBack = { navController.popBackStack() }
             )
         }
