@@ -5,9 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.barberleomx.ui.screens.barberdetail.BarberDetailScreen
-import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
+import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.payment.PaymentScreen
+import com.example.barberleomx.ui.screens.splash.SplashScreen
 
 @Composable
 fun NavGraph(
@@ -16,9 +17,25 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "login"
+        startDestination = "splash"
     ) {
 
+        // ------------------------
+        // SPLASH
+        // ------------------------
+        composable("splash") {
+            SplashScreen(
+                onFinish = {
+                    navController.navigate("login") {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        // ------------------------
+        // LOGIN
+        // ------------------------
         composable("login") {
             LoginScreen(
                 onLoginSuccess = {
@@ -29,10 +46,16 @@ fun NavGraph(
             )
         }
 
+        // ------------------------
+        // LISTA DE BARBERÍAS
+        // ------------------------
         composable("barber_list") {
             BarberListScreen(navController)
         }
 
+        // ------------------------
+        // DETALLE BARBERÍA
+        // ------------------------
         composable("barber_detail/{barberName}") { backStackEntry ->
             BarberDetailScreen(
                 barberName = backStackEntry.arguments
@@ -42,6 +65,9 @@ fun NavGraph(
             )
         }
 
+        // ------------------------
+        // PAGOS
+        // ------------------------
         composable("payment/{barberName}/{total}") { backStackEntry ->
             PaymentScreen(
                 barberName = backStackEntry.arguments

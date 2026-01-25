@@ -1,29 +1,42 @@
 package com.example.barberleomx.ui.screens.splash
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavController
-import kotlinx.coroutines.delay
+import androidx.compose.ui.unit.dp
 import com.example.barberleomx.R
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(
+    onFinish: () -> Unit
+) {
+    val alpha = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
-        delay(6000) // 2 segundos
-        navController.navigate("login") {
-            popUpTo("splash") { inclusive = true }
-        }
+        alpha.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(durationMillis = 1200)
+        )
+        delay(800)
+        onFinish()
     }
 
-    Image(
-        painter = painterResource(id = R.drawable.inicio),
-        contentDescription = "Splash",
+    Box(
         modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop
-    )
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.inicio),
+            contentDescription = "Splash",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
 }
