@@ -1,7 +1,9 @@
 package com.example.barberleomx.ui.screens.login
 
 import android.util.Patterns
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -9,9 +11,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.barberleomx.R
 
 @Composable
 fun LoginScreen(
@@ -41,9 +47,24 @@ fun LoginScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        // ------------------------
+        // AVATAR
+        // ------------------------
+        Image(
+            painter = painterResource(id = R.drawable.barber),
+            contentDescription = "Avatar",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(130.dp)
+                .clip(CircleShape)
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         Text(
             text = "Iniciar sesión",
