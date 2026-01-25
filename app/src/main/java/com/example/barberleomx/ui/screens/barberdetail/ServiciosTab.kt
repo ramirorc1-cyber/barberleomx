@@ -24,51 +24,60 @@ fun ServiciosTab(
 
     var total by remember { mutableIntStateOf(0) }
 
-    Column(
-        modifier = Modifier
-            .padding(padding)
-            .padding(16.dp)
-    ) {
+    Scaffold(
+        modifier = Modifier.padding(padding),
+        bottomBar = {
+            Surface(shadowElevation = 8.dp) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Total: $${total}",
+                        style = MaterialTheme.typography.titleMedium
+                    )
 
-        Text(
-            text = "Servicios disponibles",
-            style = MaterialTheme.typography.titleLarge
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            items(services.size) { index ->
-                val service = services[index]
-
-                ServiceItem(
-                    service = service,
-                    onAdd = { total += service.price }
-                )
+                    Button(
+                        enabled = total > 0,
+                        onClick = {
+                            navController.navigate("payment/$barberName/$total")
+                        }
+                    ) {
+                        Text("Continuar")
+                    }
+                }
             }
         }
+    ) { innerPadding ->
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(16.dp)
         ) {
+
             Text(
-                text = "Total: $${total}",
-                style = MaterialTheme.typography.titleMedium
+                text = "Servicios disponibles",
+                style = MaterialTheme.typography.titleLarge
             )
 
-            Button(
-                enabled = total > 0,
-                onClick = {
-                    navController.navigate("payment/$barberName/$total")
-                }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxHeight()
             ) {
-                Text("Continuar")
+                items(services.size) { index ->
+                    val service = services[index]
+
+                    ServiceItem(
+                        service = service,
+                        onAdd = { total += service.price }
+                    )
+                }
             }
         }
     }
