@@ -23,7 +23,7 @@ fun NavGraph(
 
         // ---------------- SPLASH ----------------
         composable("splash") {
-            SplashScreen(navController as () -> Unit as NavController)
+            SplashScreen(navController as NavController)
         }
 
         // ---------------- LOGIN ----------------

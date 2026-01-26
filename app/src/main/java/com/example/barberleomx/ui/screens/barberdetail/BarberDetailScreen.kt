@@ -124,6 +124,7 @@ fun BarberDetailScreen(
                     intent.data = Uri.parse("tel:5512345678")
                     context.startActivity(intent)
                 }) {
+
                     Icon(Icons.Default.Call, contentDescription = "Llamar")
                 }
             }
