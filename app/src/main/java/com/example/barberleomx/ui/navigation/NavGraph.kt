@@ -6,43 +6,48 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.barberleomx.ui.screens.barberdetail.BarberDetailScreen
 import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
+import com.example.barberleomx.ui.screens.history.ClientHistoryScreen
 import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.payment.PaymentScreen
-import com.example.barberleomx.ui.screens.role.RoleSelectionScreen
-import com.example.barberleomx.ui.screens.barberdashboard.BarberDashboardScreen
-
 
 @Composable
 fun NavGraph(
-    navController: NavHostController,
-    startDestination: String
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
         startDestination = "login"
     ) {
 
+        // ---------- LOGIN ----------
         composable("login") {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate("role") {
+                    navController.navigate("barber_list") {
                         popUpTo("login") { inclusive = true }
                     }
                 }
             )
         }
 
-        composable("role") {
-            RoleSelectionScreen(navController)
-        }
-        composable("barber_dashboard") {
-            BarberDashboardScreen(navController)
-        }
-
+        // ---------- LISTA DE BARBERÍAS ----------
         composable("barber_list") {
-            BarberListScreen(navController)
+            BarberListScreen(
+                navController = navController,
+                onLogout = {
+                    navController.navigate("login") {
+                        popUpTo("barber_list") { inclusive = true }
+                    }
+                }
+            )
         }
 
+        // ---------- HISTORIAL CLIENTE ----------
+        composable("history") {
+            ClientHistoryScreen(navController)
+        }
+
+        // ---------- DETALLE BARBERO ----------
         composable("barber_detail/{barberName}") { backStackEntry ->
             BarberDetailScreen(
                 barberName = backStackEntry.arguments?.getString("barberName") ?: "",
@@ -50,6 +55,7 @@ fun NavGraph(
             )
         }
 
+        // ---------- PAGO ----------
         composable("payment/{barberName}/{total}") { backStackEntry ->
             PaymentScreen(
                 barberName = backStackEntry.arguments?.getString("barberName") ?: "",
@@ -59,4 +65,3 @@ fun NavGraph(
         }
     }
 }
-        // 🔜 Próximo paso

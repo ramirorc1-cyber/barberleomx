@@ -4,17 +4,15 @@ import android.content.Context
 
 class SessionManager(context: Context) {
 
-    private val prefs = context.getSharedPreferences(
-        "barber_session",
-        Context.MODE_PRIVATE
-    )
+    private val prefs =
+        context.getSharedPreferences("barber_session", Context.MODE_PRIVATE)
 
-    fun saveLogin() {
-        prefs.edit().putBoolean("is_logged", true).apply()
+    fun setLoggedIn(value: Boolean) {
+        prefs.edit().putBoolean("isLoggedIn", value).apply()
     }
 
-    fun isLogged(): Boolean {
-        return prefs.getBoolean("is_logged", false)
+    fun isLoggedIn(): Boolean {
+        return prefs.getBoolean("isLoggedIn", false)
     }
 
     fun logout() {

@@ -5,6 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,7 +19,8 @@ import com.example.barberleomx.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BarberListScreen(
-    navController: NavController
+    navController: NavController,
+    onLogout: () -> Unit
 ) {
     val barbers = listOf(
         Barber("Barbería Leo", R.drawable.leo),
@@ -28,7 +31,21 @@ fun BarberListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Barberías") }
+                title = { Text("Barberías") },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            navController.navigate("login") {
+                                popUpTo(0) { inclusive = true }
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ExitToApp,
+                            contentDescription = "Cerrar sesión"
+                        )
+                    }
+                }
             )
         }
     ) { padding ->
@@ -86,4 +103,3 @@ private data class Barber(
     val name: String,
     val logo: Int
 )
-

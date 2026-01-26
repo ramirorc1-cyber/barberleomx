@@ -16,8 +16,63 @@ fun PaymentScreen(
     total: Int,
     onBack: () -> Unit
 ) {
-    var metodoPago by remember { mutableStateOf<MetodoPago?>(null) }
+    var showCashDialog by remember { mutableStateOf(false) }
+    var showTransferDialog by remember { mutableStateOf(false) }
 
+    // ------------------------
+    // DIALOGO EFECTIVO
+    // ------------------------
+    if (showCashDialog) {
+        AlertDialog(
+            onDismissRequest = { showCashDialog = false },
+            confirmButton = {
+                Button(onClick = {
+                    showCashDialog = false
+                    onBack()
+                }) {
+                    Text("Aceptar")
+                }
+            },
+            title = { Text("Pago en efectivo") },
+            text = {
+                Text(
+                    "Tu pago se realizará directamente en la barbería.\n\n" +
+                            "Presenta esta confirmación al barbero el día de tu cita."
+                )
+            }
+        )
+    }
+
+    // ------------------------
+    // DIALOGO TRANSFERENCIA
+    // ------------------------
+    if (showTransferDialog) {
+        AlertDialog(
+            onDismissRequest = { showTransferDialog = false },
+            confirmButton = {
+                Button(onClick = {
+                    showTransferDialog = false
+                    onBack()
+                }) {
+                    Text("Listo")
+                }
+            },
+            title = { Text("Pago por transferencia") },
+            text = {
+                Column {
+                    Text("Realiza la transferencia con los siguientes datos:\n")
+                    Text("Banco: BBVA")
+                    Text("Cuenta: 1234 5678 9012 3456")
+                    Text("Titular: $barberName")
+                    Text("\nEl barbero validará tu pago.")
+                }
+            }
+        )
+    }
+
+    // ------------------------
+    // UI
+    // ------------------------
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,121 +94,48 @@ fun PaymentScreen(
                 .padding(padding)
                 .padding(24.dp)
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
 
-            // ----------------------------
-            // INFO BARBERO
-            // ----------------------------
-            Card {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Barbería",
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                    Text(
-                        text = barberName,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
+            Column {
+                Text(
+                    text = "Barbería",
+                    style = MaterialTheme.typography.labelMedium
+                )
+                Text(
+                    text = barberName,
+                    style = MaterialTheme.typography.titleLarge
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = "Total a pagar",
+                    style = MaterialTheme.typography.labelMedium
+                )
+                Text(
+                    text = "$$total MXN",
+                    style = MaterialTheme.typography.headlineMedium
+                )
             }
 
-            // ----------------------------
-            // TOTAL
-            // ----------------------------
-            Card {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Total a pagar",
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                    Text(
-                        text = "$$total MXN",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                }
-            }
-
-            // ----------------------------
-            // MÉTODO DE PAGO
-            // ----------------------------
-            Text(
-                text = "Selecciona método de pago",
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            MetodoPagoItem(
-                titulo = "Efectivo",
-                seleccionado = metodoPago == MetodoPago.EFECTIVO,
-                onClick = { metodoPago = MetodoPago.EFECTIVO }
-            )
-
-            MetodoPagoItem(
-                titulo = "Tarjeta",
-                seleccionado = metodoPago == MetodoPago.TARJETA,
-                onClick = { metodoPago = MetodoPago.TARJETA }
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            // ----------------------------
-            // BOTÓN CONFIRMAR
-            // ----------------------------
-            Button(
-                onClick = {
-                    // Aquí después puedes meter BD o lógica real
-                },
-                enabled = metodoPago != null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp)
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text("Confirmar pago")
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { showCashDialog = true }
+                ) {
+                    Text("Pagar en efectivo")
+                }
+
+                OutlinedButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { showTransferDialog = true }
+                ) {
+                    Text("Pagar por transferencia")
+                }
             }
         }
     }
-}
-
-// ----------------------------
-// ITEM MÉTODO DE PAGO
-// ----------------------------
-@Composable
-private fun MetodoPagoItem(
-    titulo: String,
-    seleccionado: Boolean,
-    onClick: () -> Unit
-) {
-    Card(
-        onClick = onClick,
-        colors = CardDefaults.cardColors(
-            containerColor = if (seleccionado)
-                MaterialTheme.colorScheme.primaryContainer
-            else
-                MaterialTheme.colorScheme.surface
-        ),
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            RadioButton(
-                selected = seleccionado,
-                onClick = onClick
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = titulo,
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-    }
-}
-
-// ----------------------------
-// ENUM MÉTODOS
-// ----------------------------
-private enum class MetodoPago {
-    EFECTIVO,
-    TARJETA
 }
