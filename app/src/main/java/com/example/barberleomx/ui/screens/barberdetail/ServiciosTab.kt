@@ -24,6 +24,7 @@ fun ServiciosTab(
     )
 
     var total by remember { mutableIntStateOf(0) }
+    var cantidad by remember { mutableIntStateOf(0) }
 
     Scaffold(
         modifier = Modifier.padding(padding),
@@ -36,10 +37,16 @@ fun ServiciosTab(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "Total: $${total}",
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                    Column {
+                        Text(
+                            text = "Servicios: $cantidad",
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Text(
+                            text = "Total: $${total}",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
 
                     Button(
                         enabled = total > 0,
@@ -76,7 +83,16 @@ fun ServiciosTab(
 
                     ServiceItem(
                         service = service,
-                        onAdd = { total += service.price }
+                        onAdd = {
+                            total += service.price
+                            cantidad++
+                        },
+                        onRemove = {
+                            if (total >= service.price && cantidad > 0) {
+                                total -= service.price
+                                cantidad--
+                            }
+                        }
                     )
                 }
             }
@@ -87,7 +103,8 @@ fun ServiciosTab(
 @Composable
 private fun ServiceItem(
     service: Service,
-    onAdd: () -> Unit
+    onAdd: () -> Unit,
+    onRemove: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
@@ -110,8 +127,16 @@ private fun ServiceItem(
                 )
             }
 
-            Button(onClick = onAdd) {
-                Text("Agregar")
+            Row {
+                OutlinedButton(onClick = onRemove) {
+                    Text("−")
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Button(onClick = onAdd) {
+                    Text("+")
+                }
             }
         }
     }

@@ -1,8 +1,11 @@
 package com.example.barberleomx.ui.screens.payment
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
@@ -13,43 +16,144 @@ fun PaymentScreen(
     total: Int,
     onBack: () -> Unit
 ) {
+    var metodoPago by remember { mutableStateOf<MetodoPago?>(null) }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(
-                        "Pago",
-                        style = MaterialTheme.typography.titleLarge
-                    )
+                title = { Text("Pago") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Regresar"
+                        )
+                    }
                 }
             )
         }
     ) { padding ->
+
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(16.dp)
+                .padding(24.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            Text("Barbería: $barberName")
-            Text("Total: $${total}")
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Button(onClick = { /* efectivo */ }) {
-                Text("Pagar en efectivo")
+            // ----------------------------
+            // INFO BARBERO
+            // ----------------------------
+            Card {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Barbería",
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                    Text(
+                        text = barberName,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Button(onClick = { /* tarjeta */ }) {
-                Text("Pagar con tarjeta")
+            // ----------------------------
+            // TOTAL
+            // ----------------------------
+            Card {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Total a pagar",
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                    Text(
+                        text = "$$total MXN",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            // ----------------------------
+            // MÉTODO DE PAGO
+            // ----------------------------
+            Text(
+                text = "Selecciona método de pago",
+                style = MaterialTheme.typography.titleMedium
+            )
 
-            TextButton(onClick = onBack) {
-                Text("Cancelar")
+            MetodoPagoItem(
+                titulo = "Efectivo",
+                seleccionado = metodoPago == MetodoPago.EFECTIVO,
+                onClick = { metodoPago = MetodoPago.EFECTIVO }
+            )
+
+            MetodoPagoItem(
+                titulo = "Tarjeta",
+                seleccionado = metodoPago == MetodoPago.TARJETA,
+                onClick = { metodoPago = MetodoPago.TARJETA }
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            // ----------------------------
+            // BOTÓN CONFIRMAR
+            // ----------------------------
+            Button(
+                onClick = {
+                    // Aquí después puedes meter BD o lógica real
+                },
+                enabled = metodoPago != null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp)
+            ) {
+                Text("Confirmar pago")
             }
         }
     }
+}
+
+// ----------------------------
+// ITEM MÉTODO DE PAGO
+// ----------------------------
+@Composable
+private fun MetodoPagoItem(
+    titulo: String,
+    seleccionado: Boolean,
+    onClick: () -> Unit
+) {
+    Card(
+        onClick = onClick,
+        colors = CardDefaults.cardColors(
+            containerColor = if (seleccionado)
+                MaterialTheme.colorScheme.primaryContainer
+            else
+                MaterialTheme.colorScheme.surface
+        ),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = seleccionado,
+                onClick = onClick
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = titulo,
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
+}
+
+// ----------------------------
+// ENUM MÉTODOS
+// ----------------------------
+private enum class MetodoPago {
+    EFECTIVO,
+    TARJETA
 }

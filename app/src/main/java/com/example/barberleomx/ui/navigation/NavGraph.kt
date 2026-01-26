@@ -4,32 +4,39 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.barberleomx.ui.screens.splash.SplashScreen
-import com.example.barberleomx.ui.screens.login.LoginScreen
-import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
 import com.example.barberleomx.ui.screens.barberdetail.BarberDetailScreen
+import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
+import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.payment.PaymentScreen
+import com.example.barberleomx.ui.screens.role.RoleSelectionScreen
+import com.example.barberleomx.ui.screens.barberdashboard.BarberDashboardScreen
+
 
 @Composable
-fun NavGraph(navController: NavHostController, startDestination: String) {
-
+fun NavGraph(
+    navController: NavHostController,
+    startDestination: String
+) {
     NavHost(
         navController = navController,
-        startDestination = "splash"
+        startDestination = "login"
     ) {
-
-        composable("splash") {
-            SplashScreen(navController)
-        }
 
         composable("login") {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate("barber_list") {
+                    navController.navigate("role") {
                         popUpTo("login") { inclusive = true }
                     }
                 }
             )
+        }
+
+        composable("role") {
+            RoleSelectionScreen(navController)
+        }
+        composable("barber_dashboard") {
+            BarberDashboardScreen(navController)
         }
 
         composable("barber_list") {
@@ -52,3 +59,4 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
         }
     }
 }
+        // 🔜 Próximo paso
