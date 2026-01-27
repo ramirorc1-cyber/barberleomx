@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavGraph(
                     navController = navController,
-                    startDestination = startDestination
+                    startDestination = startDestination,
                 )
             }
         }
