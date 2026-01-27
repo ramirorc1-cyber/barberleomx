@@ -82,7 +82,3 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
     }
 }
 
-@Composable
-fun CitaScreen(navController: NavHostController) {
-    TODO("Not yet implemented")
-}

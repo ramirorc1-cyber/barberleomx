@@ -17,9 +17,8 @@ import com.example.barberleomx.ui.navigation.Routes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CitaScreen(
-    navController: NavController
-) {
+fun CitaScreen(navController: NavController) {
+
     var fecha by remember { mutableStateOf("") }
     var hora by remember { mutableStateOf("") }
 
@@ -27,7 +26,6 @@ fun CitaScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        // FONDO
         Image(
             painter = painterResource(id = R.drawable.login),
             contentDescription = null,
@@ -35,7 +33,6 @@ fun CitaScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        // OVERLAY
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -63,37 +60,37 @@ fun CitaScreen(
             ) {
 
                 Column {
-
                     Text(
                         text = "Selecciona fecha y hora",
                         color = Color.White,
                         style = MaterialTheme.typography.titleLarge
                     )
 
-                    Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(Modifier.height(24.dp))
 
                     OutlinedTextField(
                         value = fecha,
                         onValueChange = { fecha = it },
-                        label = { Text("Fecha (DD/MM/AAAA)", color = Color.White) },
+                        label = { Text("Fecha (DD/MM/AAAA)") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = textFieldColors()
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(Modifier.height(16.dp))
 
                     OutlinedTextField(
                         value = hora,
                         onValueChange = { hora = it },
-                        label = { Text("Hora (Ej. 16:30)", color = Color.White) },
+                        label = { Text("Hora (Ej. 16:30)") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = textFieldColors()
                     )
                 }
 
                 Button(
+                    enabled = formValido,
+                    modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        // 🔑 GUARDAMOS FECHA Y HORA
                         navController.currentBackStackEntry
                             ?.savedStateHandle
                             ?.set("fecha", fecha)
@@ -103,15 +100,10 @@ fun CitaScreen(
                             ?.set("hora", hora)
 
                         navController.navigate(Routes.PAYMENT)
-                    },
-                    enabled = formValido,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
+                    }
                 ) {
                     Text("Continuar al pago")
                 }
-
             }
         }
     }

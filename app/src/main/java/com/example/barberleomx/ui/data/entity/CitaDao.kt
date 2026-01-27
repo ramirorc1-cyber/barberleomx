@@ -1,10 +1,9 @@
-package com.example.barberleomx.ui.data.dao
+package com.example.barberleomx.ui.data.entity
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.barberleomx.ui.data.entity.CitaEntity
 
 @Dao
 interface CitaDao {

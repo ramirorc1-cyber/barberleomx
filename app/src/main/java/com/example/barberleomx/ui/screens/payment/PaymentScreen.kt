@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import com.example.barberleomx.ui.data.database.AppDatabase
 import com.example.barberleomx.ui.data.entity.CitaEntity
@@ -51,9 +50,7 @@ fun PaymentScreen(
                 }) { Text("Aceptar") }
             },
             title = { Text("Pago en efectivo") },
-            text = {
-                Text("Cita agendada para:\n$fecha a las $hora")
-            }
+            text = { Text("Cita agendada para:\n$fecha a las $hora") }
         )
     }
 
