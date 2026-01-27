@@ -39,20 +39,18 @@ fun ServiciosTab(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column {
-                        Text(
-                            text = "Servicios: $cantidad",
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                        Text(
-                            text = "Total: $${total}",
-                            style = MaterialTheme.typography.titleMedium
-                        )
+                        Text("Servicios: $cantidad")
+                        Text("Total: $$total")
                     }
 
                     Button(
                         enabled = total > 0,
                         onClick = {
-                            // ✅ NAVEGACIÓN SEGURA (SIN CRASH)
+                            // 🔑 GUARDAMOS EL TOTAL
+                            navController.currentBackStackEntry
+                                ?.savedStateHandle
+                                ?.set("total", total)
+
                             navController.navigate(Routes.PAYMENT)
                         }
                     ) {
@@ -63,40 +61,28 @@ fun ServiciosTab(
         }
     ) { innerPadding ->
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            items(services.size) { index ->
+                val service = services[index]
 
-            Text(
-                text = "Servicios disponibles",
-                style = MaterialTheme.typography.titleLarge
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxHeight()
-            ) {
-                items(services.size) { index ->
-                    val service = services[index]
-
-                    ServiceItem(
-                        service = service,
-                        onAdd = {
-                            total += service.price
-                            cantidad++
-                        },
-                        onRemove = {
-                            if (total >= service.price && cantidad > 0) {
-                                total -= service.price
-                                cantidad--
-                            }
+                ServiceItem(
+                    service = service,
+                    onAdd = {
+                        total += service.price
+                        cantidad++
+                    },
+                    onRemove = {
+                        if (total >= service.price && cantidad > 0) {
+                            total -= service.price
+                            cantidad--
                         }
-                    )
-                }
+                    }
+                )
             }
         }
     }
@@ -108,9 +94,7 @@ private fun ServiceItem(
     onAdd: () -> Unit,
     onRemove: () -> Unit
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+    Card {
         Row(
             modifier = Modifier
                 .padding(16.dp)
@@ -119,26 +103,14 @@ private fun ServiceItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
-                Text(
-                    text = service.name,
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = "$${service.price}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
+                Text(service.name)
+                Text("$${service.price}")
             }
 
             Row {
-                OutlinedButton(onClick = onRemove) {
-                    Text("−")
-                }
-
+                OutlinedButton(onClick = onRemove) { Text("−") }
                 Spacer(modifier = Modifier.width(8.dp))
-
-                Button(onClick = onAdd) {
-                    Text("+")
-                }
+                Button(onClick = onAdd) { Text("+") }
             }
         }
     }

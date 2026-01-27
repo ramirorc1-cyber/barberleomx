@@ -6,30 +6,36 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.barberleomx.ui.screens.barberdetail.BarberDetailScreen
 import com.example.barberleomx.ui.screens.barberlist.BarberListScreen
-import com.example.barberleomx.ui.screens.history.ClientHistoryScreen
+import com.example.barberleomx.ui.screens.gastos.GastosScreen
 import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.payment.PaymentScreen
+import com.example.barberleomx.ui.screens.role.RoleScreen
 
 @Composable
-fun NavGraph(
-    navController: NavHostController,
-    startDestination: String
-) {
+fun NavGraph(navController: NavHostController, startDestination: String) {
+
     NavHost(
         navController = navController,
         startDestination = Routes.LOGIN
     ) {
 
+        // ---------- LOGIN ----------
         composable(Routes.LOGIN) {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(Routes.BARBER_LIST) {
+                    navController.navigate(Routes.ROLE) {
                         popUpTo(Routes.LOGIN) { inclusive = true }
                     }
                 }
             )
         }
 
+        // ---------- ROL ----------
+        composable(Routes.ROLE) {
+            RoleScreen(navController)
+        }
+
+        // ---------- CLIENTE ----------
         composable(Routes.BARBER_LIST) {
             BarberListScreen(
                 navController = navController,
@@ -41,24 +47,27 @@ fun NavGraph(
             )
         }
 
-        composable("history") {
-            ClientHistoryScreen(navController)
-        }
-
         composable("${Routes.BARBER_DETAIL}/{barberName}") { backStackEntry ->
+            val barberName =
+                backStackEntry.arguments?.getString("barberName") ?: ""
+
             BarberDetailScreen(
-                barberName = backStackEntry.arguments?.getString("barberName") ?: "",
+                barberName = barberName,
                 navController = navController
             )
         }
 
-        // ✅ PAGO SIN PARÁMETROS (NO CRASHEA)
+        // ---------- PAGO ----------
         composable(Routes.PAYMENT) {
             PaymentScreen(
-                barberName = "",
-                total = 0,
+                navController = navController,
                 onBack = { navController.popBackStack() }
             )
+        }
+
+        // ---------- BARBERO / GASTOS ----------
+        composable(Routes.GASTOS) {
+            GastosScreen(navController)
         }
     }
 }

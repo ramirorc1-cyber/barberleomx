@@ -5,23 +5,24 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentScreen(
-    barberName: String,
-    total: Int,
+    navController: NavController,
     onBack: () -> Unit
 ) {
-    var showCashDialog by remember { mutableStateOf(false) }
-    var showTransferDialog by remember { mutableStateOf(false) }
+    // 🔑 LEEMOS EL TOTAL CORRECTAMENTE
+    val total = navController
+        .currentBackStackEntry
+        ?.savedStateHandle
+        ?.get<Int>("total") ?: 0
 
-    // ------------------------
-    // DIALOGO EFECTIVO
-    // ------------------------
+    var showCashDialog by remember { mutableStateOf(false) }
+
     if (showCashDialog) {
         AlertDialog(
             onDismissRequest = { showCashDialog = false },
@@ -34,55 +35,17 @@ fun PaymentScreen(
                 }
             },
             title = { Text("Pago en efectivo") },
-            text = {
-                Text(
-                    "Tu pago se realizará directamente en la barbería.\n\n" +
-                            "Presenta esta confirmación al barbero el día de tu cita."
-                )
-            }
+            text = { Text("Paga directamente en la barbería.") }
         )
     }
 
-    // ------------------------
-    // DIALOGO TRANSFERENCIA
-    // ------------------------
-    if (showTransferDialog) {
-        AlertDialog(
-            onDismissRequest = { showTransferDialog = false },
-            confirmButton = {
-                Button(onClick = {
-                    showTransferDialog = false
-                    onBack()
-                }) {
-                    Text("Listo")
-                }
-            },
-            title = { Text("Pago por transferencia") },
-            text = {
-                Column {
-                    Text("Realiza la transferencia con los siguientes datos:\n")
-                    Text("Banco: BBVA")
-                    Text("Cuenta: 1234 5678 9012 3456")
-                    Text("Titular: $barberName")
-                    Text("\nEl barbero validará tu pago.")
-                }
-            }
-        )
-    }
-
-    // ------------------------
-    // UI
-    // ------------------------
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Pago") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Regresar"
-                        )
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Regresar")
                     }
                 }
             )
@@ -98,43 +61,18 @@ fun PaymentScreen(
         ) {
 
             Column {
-                Text(
-                    text = "Barbería",
-                    style = MaterialTheme.typography.labelMedium
-                )
-                Text(
-                    text = barberName,
-                    style = MaterialTheme.typography.titleLarge
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = "Total a pagar",
-                    style = MaterialTheme.typography.labelMedium
-                )
+                Text("Total a pagar")
                 Text(
                     text = "$$total MXN",
                     style = MaterialTheme.typography.headlineMedium
                 )
             }
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { showCashDialog = true }
             ) {
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { showCashDialog = true }
-                ) {
-                    Text("Pagar en efectivo")
-                }
-
-                OutlinedButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { showTransferDialog = true }
-                ) {
-                    Text("Pagar por transferencia")
-                }
+                Text("Pagar en efectivo")
             }
         }
     }
