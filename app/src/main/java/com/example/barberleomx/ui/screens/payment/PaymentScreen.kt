@@ -8,6 +8,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import com.example.barberleomx.ui.data.database.AppDatabase
+import com.example.barberleomx.ui.data.entity.CitaEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -15,11 +20,24 @@ fun PaymentScreen(
     navController: NavController,
     onBack: () -> Unit
 ) {
-    // 🔑 LEEMOS EL TOTAL CORRECTAMENTE
-    val total = navController
-        .currentBackStackEntry
-        ?.savedStateHandle
-        ?.get<Int>("total") ?: 0
+    val context = LocalContext.current
+    val db = remember { AppDatabase.getDatabase(context) }
+    val scope = rememberCoroutineScope()
+
+    val total =
+        navController.previousBackStackEntry
+            ?.savedStateHandle
+            ?.get<Int>("total") ?: 0
+
+    val fecha =
+        navController.previousBackStackEntry
+            ?.savedStateHandle
+            ?.get<String>("fecha") ?: "No seleccionada"
+
+    val hora =
+        navController.previousBackStackEntry
+            ?.savedStateHandle
+            ?.get<String>("hora") ?: "No seleccionada"
 
     var showCashDialog by remember { mutableStateOf(false) }
 
@@ -30,12 +48,12 @@ fun PaymentScreen(
                 Button(onClick = {
                     showCashDialog = false
                     onBack()
-                }) {
-                    Text("Aceptar")
-                }
+                }) { Text("Aceptar") }
             },
             title = { Text("Pago en efectivo") },
-            text = { Text("Paga directamente en la barbería.") }
+            text = {
+                Text("Cita agendada para:\n$fecha a las $hora")
+            }
         )
     }
 
@@ -45,7 +63,7 @@ fun PaymentScreen(
                 title = { Text("Pago") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Regresar")
+                        Icon(Icons.Default.ArrowBack, null)
                     }
                 }
             )
@@ -62,15 +80,27 @@ fun PaymentScreen(
 
             Column {
                 Text("Total a pagar")
-                Text(
-                    text = "$$total MXN",
-                    style = MaterialTheme.typography.headlineMedium
-                )
+                Text("$$total MXN", style = MaterialTheme.typography.headlineMedium)
+                Spacer(Modifier.height(16.dp))
+                Text("Fecha: $fecha")
+                Text("Hora: $hora")
             }
 
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { showCashDialog = true }
+                onClick = {
+                    scope.launch {
+                        db.citaDao().insertarCita(
+                            CitaEntity(
+                                barberName = "Barbería seleccionada",
+                                total = total,
+                                fecha = fecha,
+                                hora = hora
+                            )
+                        )
+                    }
+                    showCashDialog = true
+                }
             ) {
                 Text("Pagar en efectivo")
             }

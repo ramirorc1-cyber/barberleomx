@@ -46,12 +46,13 @@ fun ServiciosTab(
                     Button(
                         enabled = total > 0,
                         onClick = {
-                            // 🔑 GUARDAMOS EL TOTAL
+                            // 🔑 GUARDAMOS EL TOTAL (NO SE TOCA)
                             navController.currentBackStackEntry
                                 ?.savedStateHandle
                                 ?.set("total", total)
 
-                            navController.navigate(Routes.PAYMENT)
+                            // 👉 AHORA VAMOS A CITA
+                            navController.navigate(Routes.CITA)
                         }
                     ) {
                         Text("Continuar")
@@ -108,9 +109,13 @@ private fun ServiceItem(
             }
 
             Row {
-                OutlinedButton(onClick = onRemove) { Text("−") }
+                OutlinedButton(onClick = onRemove) {
+                    Text("−")
+                }
                 Spacer(modifier = Modifier.width(8.dp))
-                Button(onClick = onAdd) { Text("+") }
+                Button(onClick = onAdd) {
+                    Text("+")
+                }
             }
         }
     }

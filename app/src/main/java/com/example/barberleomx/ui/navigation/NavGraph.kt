@@ -10,6 +10,8 @@ import com.example.barberleomx.ui.screens.gastos.GastosScreen
 import com.example.barberleomx.ui.screens.login.LoginScreen
 import com.example.barberleomx.ui.screens.payment.PaymentScreen
 import com.example.barberleomx.ui.screens.role.RoleScreen
+import com.example.barberleomx.ui.screens.cita.CitaScreen
+
 
 @Composable
 fun NavGraph(navController: NavHostController, startDestination: String) {
@@ -47,6 +49,7 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
             )
         }
 
+        // ---------- DETALLE BARBERÍA ----------
         composable("${Routes.BARBER_DETAIL}/{barberName}") { backStackEntry ->
             val barberName =
                 backStackEntry.arguments?.getString("barberName") ?: ""
@@ -64,10 +67,22 @@ fun NavGraph(navController: NavHostController, startDestination: String) {
                 onBack = { navController.popBackStack() }
             )
         }
+        // ---------- CITA ----------
+        composable(Routes.CITA) {
+            CitaScreen(
+                navController = navController
+            )
+        }
 
-        // ---------- BARBERO / GASTOS ----------
+
+        // ---------- BARBERO ----------
         composable(Routes.GASTOS) {
             GastosScreen(navController)
         }
     }
+}
+
+@Composable
+fun CitaScreen(navController: NavHostController) {
+    TODO("Not yet implemented")
 }

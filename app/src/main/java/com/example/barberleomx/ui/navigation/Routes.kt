@@ -7,4 +7,6 @@ object Routes {
     const val BARBER_DETAIL = "barber_detail"
     const val PAYMENT = "payment"
     const val GASTOS = "gastos"
+    const val CITA = "cita"
+
 }
