@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.barberleomx.ui.navigation.Routes
 
 @Composable
 fun ServiciosTab(
@@ -51,7 +52,8 @@ fun ServiciosTab(
                     Button(
                         enabled = total > 0,
                         onClick = {
-                            navController.navigate("payment/$barberName/$total")
+                            // ✅ NAVEGACIÓN SEGURA (SIN CRASH)
+                            navController.navigate(Routes.PAYMENT)
                         }
                     ) {
                         Text("Continuar")
