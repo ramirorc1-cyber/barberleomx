@@ -97,7 +97,7 @@ fun BarberDetailScreen(
                     context.startActivity(
                         Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse("https://www.instagram.com")
+                            Uri.parse("https://www.instagram.com/barberxleomx_?igsh=bGtqMXFzNm04a3I3")
                         )
                     )
                 }) {
@@ -110,7 +110,7 @@ fun BarberDetailScreen(
                     context.startActivity(
                         Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse("https://www.facebook.com")
+                            Uri.parse("https://www.facebook.com/share/181N6aGPoF/?mibextid=wwXIfr")
                         )
                     )
                 }) {
